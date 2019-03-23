@@ -3,10 +3,11 @@
 //
 
 #include <fstream>
+#include <iostream>
 #include "PositionLogger.h"
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
-void PositionLogger::saveCoordinates(std::vector<Points> coordinates) {
+void PositionLogger::saveCoordinates(std::vector<Coordinates> coordinates) {
     std::ofstream file(getPath(), std::ios::out | std::ios::binary);
     uint16_t numOfParticles = coordinates.size();
     uint16_t numOfPositions;
@@ -14,7 +15,7 @@ void PositionLogger::saveCoordinates(std::vector<Points> coordinates) {
         numOfPositions = coordinates[i].size();
         file << i;
         for(uint16_t j = 0; j < numOfPositions; j++) {
-            file << ' ' << (int) coordinates[i][j].x << ' ' << (int) coordinates[i][j].y;
+            file << ' ' << coordinates[i][j].x << ' ' << coordinates[i][j].y;
         }
         file << '\n';
     }

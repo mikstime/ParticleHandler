@@ -7,8 +7,7 @@
 
 
 #include "opencv2/core/core.hpp"
-
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
 class ParticleDistinguisher {
     cv::Mat image;
@@ -17,7 +16,7 @@ class ParticleDistinguisher {
     // variable for storing particles
     std::vector<Points> contours;
     // variable for storing centers of the particles
-    Points centers;
+    Coordinates centers;
     // List of private methods that are needed
     // to process image
     void __process();
@@ -34,7 +33,7 @@ public:
     uint8_t getRadius();
     cv::Mat getImage();
     std::vector<Points> getContours();
-    Points getCenters();
+    Coordinates getCenters();
     //constructors
     ParticleDistinguisher();
     ParticleDistinguisher(uint8_t);

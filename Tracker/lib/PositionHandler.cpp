@@ -4,10 +4,11 @@
 
 #include <iostream>
 #include "PositionHandler.h"
-std::vector<Points> PositionHandler::getProcessedPositions() {
+#include "TYPES.h"
+std::vector<Coordinates> PositionHandler::getProcessedPositions() {
     return processedPositions;
 }
-void PositionHandler::setPositionsToProcess(std::vector<Points> positionsToProcess_) {
+void PositionHandler::setPositionsToProcess(std::vector<Coordinates> positionsToProcess_) {
     positionsToProcess = positionsToProcess_;
     __isCombined = false;
     if(processedPositions.size() == 0) {
@@ -22,7 +23,7 @@ void PositionHandler::__combinePositions() {
     uint16_t endLeft = processedPositions.size();
     uint16_t endRight = positionsToProcess.size();
     // For storing current points from left and right parts
-    cv::Point leftPoint, rightPoint;
+    Coordinate leftPoint, rightPoint;
     for (uint16_t i = 0; i < endLeft; i++) {
         for (uint16_t j = 0; j < endRight; j++) {
             // If particle already processed just skip

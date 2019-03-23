@@ -6,7 +6,7 @@
 #include "opencv2/core.hpp"
 #include <vector>
 #include <random>
-typedef cv::Point3_<uint8_t> Pixel;
+#include "TYPES.h"
 using std::string;
 // Image input and output
 cv::Mat ImageHandler::getImage() {

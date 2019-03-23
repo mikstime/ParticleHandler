@@ -8,12 +8,12 @@
 #include <opencv2/core/core.hpp>
 #include "Path.h"
 #include <vector>
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
 class PositionLogger: public Path {
 
 public:
-    void saveCoordinates(std::vector<Points>);
+    void saveCoordinates(std::vector<Coordinates>);
     void reset();
 };
 

@@ -7,7 +7,7 @@
 #include <vector>
 #include <iostream>
 #include "Filter.h"
-typedef cv::Point3_<uint8_t> Pixel;
+#include "TYPES.h"
 
 void FilterApplier::addFilter(Filter * filter) {
     // Add filter to the end of filters

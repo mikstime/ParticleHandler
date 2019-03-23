@@ -6,24 +6,23 @@
 #include "opencv2/core/core.hpp"
 #include "vector"
 #include <map>
+#include "TYPES.h"
 
-
-typedef std::vector<cv::Point> Points;
-void PositionTracker::setCenters(Points currentCenters_, Points nextCenters_) {
+void PositionTracker::setCenters(Coordinates currentCenters_, Coordinates nextCenters_) {
     __clearResults();
     currentCenters = currentCenters_;
     nextCenters = nextCenters_;
 }
-void PositionTracker::setCurrentCenters(Points currentCenters_) {
+void PositionTracker::setCurrentCenters(Coordinates currentCenters_) {
     currentCenters = currentCenters_;
 }
-void PositionTracker::setNextCenters(Points nextCenters_) {
+void PositionTracker::setNextCenters(Coordinates nextCenters_) {
     nextCenters = nextCenters_;
 }
 
 void PositionTracker::analyse() {
 
-    cv::Point center1, center2;
+    Point center1, center2;
     // Find the closest particle in O(n^2)
     //@TODO Try to  reduce to O(nlogn)
     //@TODO Use linked lists for quick deletion of used particles
@@ -43,7 +42,7 @@ void PositionTracker::analyse() {
             double dy = center1.y - center2.y;
             //
             double distanceSquared = dx * dx + dy * dy;
-            Points united;
+            Coordinates united;
             // If distance between centers is less than size of a particle
             // Movement can be detected and united
             if(distanceSquared < maxDistSquared) {
@@ -64,7 +63,7 @@ void PositionTracker::setRadius(uint8_t particleRadius_) {
 uint8_t PositionTracker::getRadius() {
     return particleRadius;
 }
-std::vector<Points> PositionTracker::getUnitedCenters() {
+std::vector<Coordinates> PositionTracker::getUnitedCenters() {
     return unitedCenters;
 }
 void PositionTracker::__clearResults() {

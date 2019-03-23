@@ -8,8 +8,7 @@
 #include <opencv2/core/core.hpp>
 #include "Filter.h"
 #include <vector>
-
-typedef cv::Point3_<uint8_t> Pixel;
+#include "TYPES.h"
 
 class EmphasizeFilter: public Filter {
     cv::Mat image;

@@ -11,7 +11,7 @@
 #include "PositionHandler.h"
 #include <string>
 #include <list>
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
 class PositionAnalyser {
     uint16_t start, end;
@@ -20,7 +20,7 @@ class PositionAnalyser {
     FrameHandler* frameHandler;
     PositionLogger* positionLogger;
     PositionHandler* positionHandler;
-    std::vector<Points> currentPositions;
+    std::vector<Coordinates> currentPositions;
     void __setup();
     void __setupVideoReader();
     void __setupFrameHandler();

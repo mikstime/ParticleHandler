@@ -7,6 +7,7 @@
 
 #include "opencv2/core/core.hpp"
 #include "FilterApplier.h"
+#include "TYPES.h"
 
 class ImageHandler {
     cv::Mat image;

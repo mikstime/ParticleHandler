@@ -5,7 +5,7 @@
 
 #include <opencv2/core.hpp>
 #include "BandWFilter.h"
-typedef cv::Point3_<uint8_t> Pixel;
+#include "TYPES.h"
 
 void BandWFilter::setImage(cv::Mat *image_) {
     image = image_;

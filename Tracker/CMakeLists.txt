@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.13)
 
 
 project(tracker)
-
 find_package(OpenCV REQUIRED)
 
 set(SOURCE_LIB include/PositionTracker.h lib/PoisitoinTracker.cpp

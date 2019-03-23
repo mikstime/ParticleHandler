@@ -6,7 +6,7 @@
 #include "FrameHandler.h"
 #include "BandWFilter.h"
 #include "EmphasizeFilter.h"
-
+#include "TYPES.h"
 void FrameHandler::setFrames(cv::Mat currentFrame_, cv::Mat nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
@@ -84,7 +84,7 @@ void FrameHandler::ProcessFrames() {
 FrameHandler::FrameHandler() {
     __setup();
 }
-std::vector<Points> FrameHandler::getPositionChange() {
+std::vector<Coordinates> FrameHandler::getPositionChange() {
     return centerPositionChange;
 }
 void FrameHandler::__clearResults() {

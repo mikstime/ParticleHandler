@@ -9,20 +9,19 @@
 #include "ImageHandler.h"
 #include "ParticleDistinguisher.h"
 #include "PositionTracker.h"
-
+#include "TYPES.h"
 typedef std::vector<double> ParamList;
-typedef std::vector<cv::Point> Points;
 //@TODO Add method .Clear()
 class FrameHandler {
     ImageHandler* imageHandler;
     ParticleDistinguisher* particleDistinguisher;
     PositionTracker* positionTracker;
     cv::Mat currentFrame, nextFrame;
-    Points  currentCenters, nextCenters;
+    Coordinates  currentCenters, nextCenters;
     //@TODO reorganize parametrs
     //@TODO and the way of passing it to handlers
     uint8_t particleRadius;
-    std::vector<Points> centerPositionChange;
+    std::vector<Coordinates> centerPositionChange;
     void __process();
     void __filter();
     void __distinguish();
@@ -40,7 +39,7 @@ public:
     void setNextFrame(cv::Mat);
     cv::Mat getCurrentFrame();
     cv::Mat getNextFrame();
-    std::vector<Points> getPositionChange();
+    std::vector<Coordinates> getPositionChange();
     void ProcessFrames();
     void setParams(ParamList);
     FrameHandler();

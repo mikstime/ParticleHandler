@@ -7,8 +7,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
-typedef cv::Point3_<uint8_t > Pixel;
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
 /*
  * File structure:
@@ -69,14 +68,14 @@ void ParticleDistinguisher::__filterResults() {
 
 }
 void ParticleDistinguisher::__computeCenters() {
-        Points result;
+        Coordinates result;
 
         for (int i=0; i < contours.size();i++) {
             //  Calculate moment for current counter.
             //  Since input is binary the second param is true
             cv::Moments m = cv::moments(contours[i],true);
             // Find center of masses and push it in result.
-            result.push_back( cv::Point(m.m10/m.m00, m.m01/m.m00));
+            result.push_back( Coordinate(m.m10/m.m00, m.m01/m.m00));
         }
         centers = result;
 
@@ -92,7 +91,7 @@ uint8_t ParticleDistinguisher::getRadius() {
 std::vector<Points> ParticleDistinguisher::getContours() {
     return contours;
 }
-Points ParticleDistinguisher::getCenters() {
+Coordinates ParticleDistinguisher::getCenters() {
     return centers;
 }
 //Constructors

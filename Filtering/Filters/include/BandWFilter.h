@@ -8,7 +8,6 @@
 
 #include "Filter.h"
 #include <opencv2/core/core.hpp>
-
 class BandWFilter: public Filter {
     cv::Mat* image;
     bool __hasAtomic = true;

@@ -9,6 +9,7 @@
 #include "opencv2/core/mat.hpp"
 #include "Filter.h"
 #include <map>
+#include "TYPES.h"
 
 class FilterApplier {
     std::vector<Filter*> filters;

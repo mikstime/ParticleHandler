@@ -5,7 +5,7 @@ project(ParticleHandler)
 find_package(OpenCV REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
-
+include_directories(${CMAKE_SOURCE_DIR})
 include_directories(Filtering/include)
 include_directories(Filtering/Filters/include)
 include_directories(Distinguisher/include)

@@ -6,7 +6,8 @@
 #define PARTICLEDISTINGUISHER_FILTER_H
 
 #include <opencv2/core/mat.hpp>
-typedef cv::Point3_<uint8_t> Pixel;
+#include "TYPES.h"
+
 class Filter {
 
 public:

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <opencv2/highgui.hpp>
 #include "PositionAnalyser.h"
-
+#include "TYPES.h"
 void PositionAnalyser::__clearResults() {
     currentPositions.clear();
     //@TODO make all modules 'resettable'

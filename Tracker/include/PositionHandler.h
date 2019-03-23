@@ -8,13 +8,13 @@
 #include <vector>
 #include <map>
 #include "opencv2/core/core.hpp"
-typedef std::vector<cv::Point> Points;
+#include "TYPES.h"
 
 //@TODO on __combinePositions() previous results is updated by currentResult. CurrentResult.clear();
 class PositionHandler {
     uint8_t particleRadius;
     bool __isCombined = false;
-    std::vector<Points> processedPositions, positionsToProcess;
+    std::vector<Coordinates> processedPositions, positionsToProcess;
     std::map<int, bool> processedFound;
     std::map<int, bool > toProcessFound;
     void __setup();
@@ -24,9 +24,9 @@ class PositionHandler {
     void __reset();
 public:
     void setParticleRadius(uint8_t);
-    void setPositionsToProcess(std::vector<Points>);
+    void setPositionsToProcess(std::vector<Coordinates>);
     void combine();
-    std::vector<Points> getProcessedPositions();
+    std::vector<Coordinates> getProcessedPositions();
     void reset();
 };
 
