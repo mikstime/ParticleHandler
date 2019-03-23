@@ -62,7 +62,6 @@ void FrameHandler::__distinguish() {
 
     particleDistinguisher->setImage(currentFrame);
     currentCenters = particleDistinguisher->getCenters();
-
     particleDistinguisher->setImage(nextFrame);
     nextCenters = particleDistinguisher->getCenters();
 

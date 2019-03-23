@@ -9,9 +9,11 @@
 #include <vector>
 
 typedef cv::Point3_<uint8_t> Pixel;
+
 typedef cv::Point Point;
-typedef cv::Point Coordinate;
-typedef std::vector<Coordinate> Coordinates;
 typedef std::vector<Point> Points;
+
+typedef cv::Point2d Coordinate;
+typedef std::vector<Coordinate> Coordinates;
 
 #endif //PARTICLEHANDLER_TYPES_H
