@@ -22,7 +22,7 @@ void PositionTracker::setNextCenters(Coordinates nextCenters_) {
 
 void PositionTracker::analyse() {
 
-    Point center1, center2;
+    Coordinate center1, center2;
     // Find the closest particle in O(n^2)
     //@TODO Try to  reduce to O(nlogn)
     //@TODO Use linked lists for quick deletion of used particles

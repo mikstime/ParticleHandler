@@ -51,7 +51,6 @@ void ParticleDistinguisher::__detectPoints() {
     std::vector<Points> _contours;
     // Find contours of each(Most likely) particle
     findContours(image, _contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
-
     contours = _contours;
 
 }
@@ -60,7 +59,7 @@ void ParticleDistinguisher::__filterResults() {
 
     //Filter out contours with size less than ~ 1/6Particles area
     for(int i = 0; i < contours.size(); i++) {
-        if (contours[i].size() > radius * radius)
+        if (contours[i].size() > radius * radius / 6)
             filtered.push_back(contours[i]);
     }
 
@@ -78,7 +77,6 @@ void ParticleDistinguisher::__computeCenters() {
             result.push_back( Coordinate(m.m10/m.m00, m.m01/m.m00));
         }
         centers = result;
-
 }
 // Getters
 cv::Mat ParticleDistinguisher::getImage() {

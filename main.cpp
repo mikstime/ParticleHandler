@@ -7,7 +7,7 @@ int main() {
     PositionAnalyser* positionAnalyser = new PositionAnalyser;
     positionAnalyser->setParticleRadius(5);
     positionAnalyser->loadVideo("../test.avi");
-    positionAnalyser->setBorders(1,3);
+    positionAnalyser->setBorders(1,500);
     positionAnalyser->ProcessVideo();
     positionAnalyser->savePositionList("../logs.txt");
     return 0;
