@@ -58,7 +58,6 @@ void PositionAnalyser::ProcessVideo() {
     }
 }
 PositionAnalyser::PositionAnalyser() {
-    std::cout << "sfdsf\n";
     __setup();
 }
 void PositionAnalyser::savePositionList(std::string path) {

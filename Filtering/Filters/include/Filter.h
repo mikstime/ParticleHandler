@@ -8,7 +8,7 @@
 #include <opencv2/core/mat.hpp>
 typedef cv::Point3_<uint8_t> Pixel;
 class Filter {
-    cv::Mat* image;
+
 public:
     virtual bool hasAtomic() = 0;
     virtual void setImage(cv::Mat*) = 0;

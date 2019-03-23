@@ -5,6 +5,7 @@
 #include "FilterApplier.h"
 #include <opencv2/core/core.hpp>
 #include <vector>
+#include <iostream>
 #include "Filter.h"
 typedef cv::Point3_<uint8_t> Pixel;
 
@@ -59,7 +60,7 @@ cv::Mat FilterApplier::applyFilters(cv::Mat image_) {
             OrdinaryFilters.push_back(filter);
     }
     // apply atomic filters
-    if(AtomicFilters.size() > 0) {
+    if(!AtomicFilters.empty()) {
         image_.forEach<Pixel>(
                 [&](Pixel& pixel, const int* position) -> void {
                     for(Filter* filter : AtomicFilters) {
