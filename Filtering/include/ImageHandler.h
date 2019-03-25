@@ -16,12 +16,8 @@ public:
     // Operations with Image
     void setImage(cv::Mat);
     cv::Mat getImage();
-    // Operations with Filters
-    void setFilter(Filter*);
-    void addFilter(Filter*);
-    void addFilters(std::vector<Filter*>&);
-    int deleteFilter(Filter*);
-    void deleteFilters();
+
+    FilterApplier* getFilterApplier();
     void applyFilters();
 
     void reset();

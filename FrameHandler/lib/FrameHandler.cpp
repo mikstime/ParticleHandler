@@ -7,6 +7,8 @@
 #include "BandWFilter.h"
 #include "EmphasizeFilter.h"
 #include "TYPES.h"
+#include "SettingsHandler.h"
+#include "FilterApplierSettinger.h"
 void FrameHandler::setFrames(cv::Mat currentFrame_, cv::Mat nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
@@ -29,9 +31,10 @@ void FrameHandler::__setupFilters() {
     imageHandler = new ImageHandler;
     Filter* blackAndWhiteFilter = new BandWFilter;
     Filter* emphasizeFilter = new EmphasizeFilter;
-    //@TODO organize filter setting
-    imageHandler->addFilter(blackAndWhiteFilter);
-    imageHandler->addFilter(emphasizeFilter);
+
+    FilterApplierSettinger* FAS =(FilterApplierSettinger*) SettingsHandler::getFAS();
+    FAS->addFilter(imageHandler->getFilterApplier(), blackAndWhiteFilter);
+    FAS->addFilter(imageHandler->getFilterApplier(), emphasizeFilter);
 }
 void FrameHandler::__setupParticleDistinguisher() {
     particleDistinguisher = new ParticleDistinguisher;

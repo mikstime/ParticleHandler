@@ -13,13 +13,14 @@
 
 class FilterApplier {
     std::vector<Filter*> filters;
-public:
+protected:
     void setFilter(Filter*);
     void addFilter(Filter*);
     void addFilters(std::vector<Filter*>);
     int deleteFilter(Filter*);
     void deleteFilters();
-
+public:
+    friend class FilterApplierSettinger;
     cv::Mat applyFilters(cv::Mat);
 
     void reset();

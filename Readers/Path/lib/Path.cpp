@@ -4,6 +4,7 @@
 
 #include "../include/Path.h"
 #include <string>
+#include <stdexcept>
 using std::string;
 
 bool Path::__separateDir(string& pathWithDir) {

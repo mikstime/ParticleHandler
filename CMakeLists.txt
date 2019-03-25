@@ -14,6 +14,7 @@ include_directories(Readers/include)
 include_directories(Readers/Path/include)
 include_directories(FrameHandler/include)
 include_directories(PositionAnalyser/include)
+include_directories(SettingsHandler/include)
 ###
 add_subdirectory(Filtering)
 add_subdirectory(Filtering/filters)
@@ -23,6 +24,7 @@ add_subdirectory(Readers)
 add_subdirectory(Readers/Path)
 add_subdirectory(FrameHandler)
 add_subdirectory(PositionAnalyser)
+add_subdirectory(SettingsHandler)
 
 add_executable(ParticleHandler main.cpp)
 
@@ -35,4 +37,5 @@ target_link_libraries(ParticleHandler ${OpenCV_LIBS}
         tracker
         readers
         frameHandler
-        positionAnalyser)
+        positionAnalyser
+        settingsHandler)

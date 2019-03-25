@@ -23,10 +23,6 @@ void PositionTracker::setNextCenters(Coordinates nextCenters_) {
 void PositionTracker::analyse() {
 
     Coordinate center1, center2;
-    // Find the closest particle in O(n^2)
-    //@TODO Try to  reduce to O(nlogn)
-    //@TODO Use linked lists for quick deletion of used particles
-    //@TODO add check if particle already tracked
     double maxDistSquared = 5 * 4 * particleRadius * particleRadius;
     std::map<int, bool> concatNext;
     for(uint16_t i = 0; i < currentCenters.size(); i++) {
