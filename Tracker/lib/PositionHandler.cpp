@@ -53,6 +53,7 @@ void PositionHandler::__combinePositions() {
         }
     }
     // For each not detected particle copy previous values
+    //@TODO refactor
     for (int i = 0; i < processedPositions.size(); i++) {
         if (!processedFound[i]) {
             uint16_t lastInd = processedPositions[i].size() - 1;

@@ -8,11 +8,10 @@
 
 #include "opencv2/core/core.hpp"
 #include "TYPES.h"
-
 class ParticleDistinguisher {
     cv::Mat image;
     // Radius of a particle
-    uint8_t radius;
+    uint8_t particleRadius;
     // variable for storing particles
     std::vector<Points> contours;
     // variable for storing centers of the particles
@@ -25,10 +24,12 @@ class ParticleDistinguisher {
     void __computeCenters();
     void __clearResults();
     void __setup();
+
+protected:
 public:
     //setters
     void setImage(cv::Mat);
-    void setRadius(uint8_t);
+    void setParticleRadius(uint8_t);
     //getters
     uint8_t getRadius();
     cv::Mat getImage();
@@ -38,6 +39,7 @@ public:
     ParticleDistinguisher();
     ParticleDistinguisher(uint8_t);
     void reset();
+    friend class ParticleDistinguisherSettinger;
 };
 
 

@@ -16,10 +16,11 @@ class PositionTracker {
     Coordinates currentCenters, nextCenters;
     std::vector<Coordinates> unitedCenters;
 
-    u_int16_t currentId;
     void __clearResults();
-public:
+
+protected:
     void setRadius(uint8_t);
+public:
     uint8_t getRadius();
     void setCurrentCenters(Coordinates);
     void setNextCenters(Coordinates);
@@ -27,6 +28,7 @@ public:
     std::vector<Coordinates> getUnitedCenters();
     void analyse();
     void reset();
+    friend class PositionTrackerSettinger;
 };
 
 

@@ -9,6 +9,7 @@
 #include "TYPES.h"
 #include "SettingsHandler.h"
 #include "FilterApplierSettinger.h"
+#include "ParticleDistinguisherSettinger.h"
 void FrameHandler::setFrames(cv::Mat currentFrame_, cv::Mat nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
@@ -29,20 +30,12 @@ void FrameHandler::__setup() {
 }
 void FrameHandler::__setupFilters() {
     imageHandler = new ImageHandler;
-    Filter* blackAndWhiteFilter = new BandWFilter;
-    Filter* emphasizeFilter = new EmphasizeFilter;
-
-    FilterApplierSettinger* FAS =(FilterApplierSettinger*) SettingsHandler::getFAS();
-    FAS->addFilter(imageHandler->getFilterApplier(), blackAndWhiteFilter);
-    FAS->addFilter(imageHandler->getFilterApplier(), emphasizeFilter);
 }
 void FrameHandler::__setupParticleDistinguisher() {
     particleDistinguisher = new ParticleDistinguisher;
-    particleDistinguisher->setRadius(particleRadius);
 }
 void FrameHandler::__setupPositionTracker() {
     positionTracker =  new  PositionTracker;
-    positionTracker->setRadius(particleRadius);
 }
 void FrameHandler::__process() {
     //@TODO Make filter parameters changeable. Probably through vector of params
@@ -94,14 +87,18 @@ void FrameHandler::__clearResults() {
     nextCenters.clear();
     centerPositionChange.clear();
 }
-void FrameHandler::setParticleRadius(uint8_t particleRadius_) {
-    particleRadius = particleRadius_;
-    positionTracker->setRadius(particleRadius_);
-    particleDistinguisher->setRadius(particleRadius_);
-}
 void FrameHandler::reset() {
     __clearResults();
     imageHandler->reset();
     particleDistinguisher->reset();
     positionTracker->reset();
+}
+ImageHandler* FrameHandler::getImageHandler() {
+    return imageHandler;
+}
+ParticleDistinguisher* FrameHandler::getParticleDistinguisher() {
+    return particleDistinguisher;
+}
+PositionTracker* FrameHandler::getPositionTracker() {
+    return positionTracker;
 }

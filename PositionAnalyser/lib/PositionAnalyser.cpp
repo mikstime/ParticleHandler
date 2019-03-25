@@ -16,24 +16,10 @@ void PositionAnalyser::__clearResults() {
     positionHandler->reset();
 }
 void PositionAnalyser::__setup() {
-    __setupVideoReader();
-    __setupFrameHandler();
-    __setupPositionHandler();
-    __setupPositionLogger();
-}
-void PositionAnalyser::__setupVideoReader() {
     videoReader = new VideoReader;
-}
-void PositionAnalyser::__setupFrameHandler() {
     frameHandler = new FrameHandler;
-    frameHandler->setParticleRadius(particleRadius);
-}
-void PositionAnalyser::__setupPositionLogger() {
     positionLogger = new PositionLogger;
-}
-void PositionAnalyser::__setupPositionHandler() {
     positionHandler = new PositionHandler;
-    positionHandler->setParticleRadius(particleRadius);
 }
 void PositionAnalyser::loadVideo(std::string path) {
     videoReader->setPath(path);
@@ -66,8 +52,7 @@ void PositionAnalyser::savePositionList(std::string path) {
 }
 void PositionAnalyser::setParticleRadius(uint8_t particleRadius_) {
     particleRadius = particleRadius_;
-    frameHandler->setParticleRadius(particleRadius_);
-    positionHandler->setParticleRadius(particleRadius_);
+    //frameHandler->setParticleRadius(particleRadius_);
 }
 void PositionAnalyser::reset() {
     __clearResults();
@@ -79,4 +64,16 @@ void PositionAnalyser::setBorders(uint16_t start_, uint16_t end_) {
     start = start_ < size ? start_ : size - 1;
     end = end_ < size ? end_ : size - 1;
 
+}
+FrameHandler* PositionAnalyser::getFrameHandler() {
+    return frameHandler;
+}
+PositionHandler* PositionAnalyser::getPositionHandler() {
+    return positionHandler;
+}
+PositionLogger* PositionAnalyser::getPositionLogger() {
+    return positionLogger;
+}
+VideoReader* PositionAnalyser::getVideoReader() {
+    return videoReader;
 }

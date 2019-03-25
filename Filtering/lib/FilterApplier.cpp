@@ -61,14 +61,15 @@ cv::Mat FilterApplier::applyFilters(cv::Mat image_) {
     }
     // apply atomic filters
     if(!AtomicFilters.empty()) {
-        image_.forEach<Pixel>(
-                [&](Pixel& pixel, const int* position) -> void {
-                    for(Filter* filter : AtomicFilters) {
-                        filter->applyAtomic(pixel, position);
+        for(Filter* filter : AtomicFilters) {
+            image_.forEach<Pixel>(
+                    [&](Pixel& pixel, const int* position) -> void {
+                            filter->applyAtomic(pixel, position);
 
-                    }
-                }
-        );
+                        }
+            );
+        }
+
     }
     // Apply ordinary filters
     for(Filter* filter : OrdinaryFilters) {

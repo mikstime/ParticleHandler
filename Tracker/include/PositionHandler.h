@@ -22,12 +22,16 @@ class PositionHandler {
     //Do some things after combining positionLists
     void __combined();
     void __reset();
-public:
+
+protected:
     void setParticleRadius(uint8_t);
+public:
     void setPositionsToProcess(std::vector<Coordinates>);
     void combine();
     std::vector<Coordinates> getProcessedPositions();
     void reset();
+
+    friend class PositionHandlerSettinger;
 };
 
 

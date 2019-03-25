@@ -6,6 +6,7 @@
 #include "opencv2/core/core.hpp"
 #include "vector"
 #include <map>
+#include <iostream>
 #include "TYPES.h"
 
 void PositionTracker::setCenters(Coordinates currentCenters_, Coordinates nextCenters_) {
@@ -25,6 +26,7 @@ void PositionTracker::analyse() {
     Coordinate center1, center2;
     double maxDistSquared = 5 * 4 * particleRadius * particleRadius;
     std::map<int, bool> concatNext;
+
     for(uint16_t i = 0; i < currentCenters.size(); i++) {
         for(uint16_t j = 0; j < nextCenters.size(); j++) {
             // Skip if already concat to avoid duplicating
@@ -66,7 +68,6 @@ void PositionTracker::__clearResults() {
     currentCenters.clear();
     nextCenters.clear();
     unitedCenters.clear();
-    currentId = 0;
 }
 void PositionTracker::reset() {
     __clearResults();

@@ -34,16 +34,19 @@ class FrameHandler {
 public:
     //@TODO change particle parametres on the go
     void setFrames(cv::Mat, cv::Mat);
-    void setParticleRadius(uint8_t);
     void setCurrentFrame(cv::Mat);
     void setNextFrame(cv::Mat);
     cv::Mat getCurrentFrame();
     cv::Mat getNextFrame();
     std::vector<Coordinates> getPositionChange();
     void ProcessFrames();
-    void setParams(ParamList);
     FrameHandler();
     void reset();
+    //
+    ImageHandler* getImageHandler();
+    ParticleDistinguisher* getParticleDistinguisher();
+    PositionTracker* getPositionTracker();
+
 };
 
 

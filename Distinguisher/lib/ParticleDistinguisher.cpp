@@ -38,8 +38,8 @@ void ParticleDistinguisher::setImage(cv::Mat image_) {
                   "No image was set!\n";
     }
 }
-void ParticleDistinguisher::setRadius(uint8_t radius_) {
-    radius = radius_;
+void ParticleDistinguisher::setParticleRadius(uint8_t particleRadius_) {
+    particleRadius = particleRadius_;
 }
 // Private methods
 void ParticleDistinguisher::__process() {
@@ -59,7 +59,7 @@ void ParticleDistinguisher::__filterResults() {
 
     //Filter out contours with size less than ~ 1/6Particles area
     for(int i = 0; i < contours.size(); i++) {
-        if (contours[i].size() > radius * radius / 6)
+        if (contours[i].size() > particleRadius * particleRadius / 6)
             filtered.push_back(contours[i]);
     }
 
@@ -84,7 +84,7 @@ cv::Mat ParticleDistinguisher::getImage() {
 
 }
 uint8_t ParticleDistinguisher::getRadius() {
-    return radius;
+    return particleRadius;
 }
 std::vector<Points> ParticleDistinguisher::getContours() {
     return contours;
@@ -96,16 +96,16 @@ Coordinates ParticleDistinguisher::getCenters() {
 ParticleDistinguisher::ParticleDistinguisher() {
     __setup();
 }
-ParticleDistinguisher::ParticleDistinguisher(uint8_t radius_) {
+ParticleDistinguisher::ParticleDistinguisher(uint8_t particleRadius_) {
     __setup();
-    radius = radius_;
+    particleRadius = particleRadius_;
 }
 void ParticleDistinguisher::__clearResults() {
     contours.clear();
     centers.clear();
 }
 void ParticleDistinguisher::__setup() {
-    radius = 1;
+    particleRadius = 1;
 }
 void ParticleDistinguisher::reset() {
     __clearResults();

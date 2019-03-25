@@ -4,14 +4,32 @@
 
 #include "SettingsHandler.h"
 #include <iostream>
-Settinger* SettingsHandler::getFAS() {
-    static Settinger* filterApplierSettinger = new FilterApplierSettinger;
-    return filterApplierSettinger;
-}
+
 SettingsHandler::SettingsHandler() {
 
 }
 SettingsHandler* SettingsHandler::getInstance() {
     static SettingsHandler* INSTANCE = new SettingsHandler;
     return INSTANCE;
+}
+
+Settinger* SettingsHandler::getPDS() {
+    static Settinger* particleDistinguisherSettinger
+    = new ParticleDistinguisherSettinger;
+    return particleDistinguisherSettinger;
+}
+Settinger* SettingsHandler::getFAS() {
+    static Settinger* filterApplierSettinger
+    = new FilterApplierSettinger;
+    return filterApplierSettinger;
+}
+Settinger* SettingsHandler::getPTS() {
+    static Settinger* positionTrackerSettinger
+    = new PositionTrackerSettinger;
+    return positionTrackerSettinger;
+}
+Settinger* SettingsHandler::getPHS() {
+    static Settinger* positionHandlerSettinger
+    = new PositionHandlerSettinger;
+    return positionHandlerSettinger;
 }

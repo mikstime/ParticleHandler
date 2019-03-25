@@ -37,6 +37,11 @@ public:
     void setBorders(uint16_t, uint16_t);
     PositionAnalyser();
     void reset();
+    //
+    VideoReader* getVideoReader();
+    FrameHandler* getFrameHandler();
+    PositionLogger* getPositionLogger();
+    PositionHandler* getPositionHandler();
 };
 
 
