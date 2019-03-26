@@ -14,23 +14,18 @@
 #include "TYPES.h"
 
 class PositionAnalyser {
+    //@TODO get rid of start and end
     uint16_t start, end;
-    uint8_t particleRadius;
     VideoReader* videoReader;
     FrameHandler* frameHandler;
     PositionLogger* positionLogger;
     PositionHandler* positionHandler;
     std::vector<Coordinates> currentPositions;
     void __setup();
-    void __setupVideoReader();
-    void __setupFrameHandler();
-    void __setupPositionLogger();
-    void __setupPositionHandler();
     void __clearResults();
     void __process2Frames(uint16_t, uint16_t);
 public:
     //Load video using VideoLoader
-    void setParticleRadius(uint8_t);
     void loadVideo(std::string);
     void savePositionList(std::string);
     void ProcessVideo();

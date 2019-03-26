@@ -15,9 +15,9 @@ cv::Mat ImageHandler::getImage() {
     return image;
 }
 void ImageHandler::applyFilters() {
-    image = filterApplier->applyFilters(image);
+    filterApplier->applyFilters(image, image);
 }
-void ImageHandler::setImage(cv::Mat image_) {
+void ImageHandler::setImage(cv::Mat& image_) {
     image = image_;
 }
 void ImageHandler::reset() {

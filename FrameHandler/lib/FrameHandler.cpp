@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <opencv2/imgproc.hpp>
 #include "FrameHandler.h"
 #include "BandWFilter.h"
 #include "EmphasizeFilter.h"
@@ -10,32 +11,23 @@
 #include "SettingsHandler.h"
 #include "FilterApplierSettinger.h"
 #include "ParticleDistinguisherSettinger.h"
-void FrameHandler::setFrames(cv::Mat currentFrame_, cv::Mat nextFrame_) {
+void FrameHandler::setFrames(const cv::Mat& currentFrame_, const cv::Mat& nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
     __clearResults();
 }
-void FrameHandler::setCurrentFrame(cv::Mat currentFrame_) {
+void FrameHandler::setCurrentFrame(const cv::Mat& currentFrame_) {
     currentFrame = currentFrame_;
     __clearResults();
 }
-void FrameHandler::setNextFrame(cv::Mat nextFrame_) {
+void FrameHandler::setNextFrame(const cv::Mat& nextFrame_) {
     nextFrame = nextFrame_;
     __clearResults();
 }
 void FrameHandler::__setup() {
-    __setupFilters();
-    __setupParticleDistinguisher();
-    __setupPositionTracker();
-}
-void FrameHandler::__setupFilters() {
     imageHandler = new ImageHandler;
-}
-void FrameHandler::__setupParticleDistinguisher() {
     particleDistinguisher = new ParticleDistinguisher;
-}
-void FrameHandler::__setupPositionTracker() {
-    positionTracker =  new  PositionTracker;
+    positionTracker = new PositionTracker;
 }
 void FrameHandler::__process() {
     //@TODO Make filter parameters changeable. Probably through vector of params
@@ -55,10 +47,14 @@ void FrameHandler::__filter() {
     nextFrame  = imageHandler->getImage();
 }
 void FrameHandler::__distinguish() {
-
-    particleDistinguisher->setImage(currentFrame);
+    cv::Mat frame1gray, frame2gray;
+    cv::cvtColor(currentFrame, frame1gray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(nextFrame, frame2gray, cv::COLOR_BGR2GRAY);
+    particleDistinguisher->setImage(frame1gray);
+    particleDistinguisher->process();
     currentCenters = particleDistinguisher->getCenters();
-    particleDistinguisher->setImage(nextFrame);
+    particleDistinguisher->setImage(frame2gray);
+    particleDistinguisher->process();
     nextCenters = particleDistinguisher->getCenters();
 
 }

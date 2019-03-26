@@ -11,7 +11,8 @@ int main() {
     auto PDS = (ParticleDistinguisherSettinger*) SettingsHandler::getPDS();
     auto PTS = (PositionTrackerSettinger*) SettingsHandler::getPTS();
     auto PHS = (PositionHandlerSettinger*) SettingsHandler::getPHS();
-    auto FAS =(FilterApplierSettinger*) SettingsHandler::getFAS();
+    auto FAS = (FilterApplierSettinger*) SettingsHandler::getFAS();
+    auto EFS = (EmphasizeFilterSettinger*) SettingsHandler::getEFH();
 
     auto fh = pa->getFrameHandler();
     auto fa = fh->getImageHandler()->getFilterApplier();
@@ -21,6 +22,8 @@ int main() {
 
     Filter* blackAndWhiteFilter = new BandWFilter;
     Filter* emphasizeFilter = new EmphasizeFilter;
+    EFS->setRadius((EmphasizeFilter *)emphasizeFilter, 5);
+    EFS->setLambda((EmphasizeFilter *)emphasizeFilter, 7);
 
     PDS->setParticleRadius(pd, 5);
     PHS->setParticleRadius(ph, 10);
@@ -29,9 +32,8 @@ int main() {
     FAS->addFilter(fa, blackAndWhiteFilter);
     FAS->addFilter(fa, emphasizeFilter);
 
-
     pa->loadVideo("../test.avi");
-    pa->setBorders(1, 1000);
+    pa->setBorders(1, 10);
     pa->ProcessVideo();
     pa->savePositionList("../logs.txt");
     return 0;

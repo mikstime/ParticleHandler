@@ -50,10 +50,6 @@ void PositionAnalyser::savePositionList(std::string path) {
     positionLogger->setPath(path);
     positionLogger->saveCoordinates(positionHandler->getProcessedPositions());
 }
-void PositionAnalyser::setParticleRadius(uint8_t particleRadius_) {
-    particleRadius = particleRadius_;
-    //frameHandler->setParticleRadius(particleRadius_);
-}
 void PositionAnalyser::reset() {
     __clearResults();
 }

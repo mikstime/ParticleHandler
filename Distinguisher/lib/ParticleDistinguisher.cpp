@@ -18,25 +18,10 @@
  */
 
 // Setters
-void ParticleDistinguisher::setImage(cv::Mat image_) {
-    try {
-        cvtColor(image_, image_, cv::COLOR_BGR2GRAY);
-    }
-    catch(...) {
-        std::cerr << "ParticleDistinguisher: \n";
-        std::cerr << "Input image should be in BGR mode\n" <<
-                     "No image was set!\n";
-        return;
-    }
-    if( image_.rows > 0) {
-        image = image_;
-        __clearResults();
-        __process();
-    } else {
-        std::cerr << "ParticleDistinguisher: \n";
-        std::cerr << "Input image must have non zero resolution\n" <<
-                  "No image was set!\n";
-    }
+void ParticleDistinguisher::setImage(const cv::Mat& image_) {
+    image = image_;
+    __clearResults();
+    __process();
 }
 void ParticleDistinguisher::setParticleRadius(uint8_t particleRadius_) {
     particleRadius = particleRadius_;
@@ -94,20 +79,16 @@ Coordinates ParticleDistinguisher::getCenters() {
 }
 //Constructors
 ParticleDistinguisher::ParticleDistinguisher() {
-    __setup();
-}
-ParticleDistinguisher::ParticleDistinguisher(uint8_t particleRadius_) {
-    __setup();
-    particleRadius = particleRadius_;
+
 }
 void ParticleDistinguisher::__clearResults() {
     contours.clear();
     centers.clear();
 }
-void ParticleDistinguisher::__setup() {
-    particleRadius = 1;
-}
 void ParticleDistinguisher::reset() {
     __clearResults();
-    __setup();
+}
+void ParticleDistinguisher::process() {
+    __clearResults();
+    __process();
 }

@@ -46,14 +46,15 @@ void FilterApplier::addFilters(std::vector<Filter *> filters_) {
         addFilter(filter);
 }
 
-cv::Mat FilterApplier::applyFilters(cv::Mat image_) {
+void FilterApplier::applyFilters(const cv::Mat & image_, cv::Mat & result) {
     // If filter has an atomic operation use it
     // If not just apply it
     std::vector<Filter*> AtomicFilters;
     std::vector<Filter*> OrdinaryFilters;
     // Set image for each filter and split filters
+    cv::Mat imagec(image_);
     for(Filter* filter : filters) {
-        filter->setImage(&image_);
+        filter->setImage(imagec);
         if(filter->hasAtomic())
             AtomicFilters.push_back(filter);
         else
@@ -62,7 +63,7 @@ cv::Mat FilterApplier::applyFilters(cv::Mat image_) {
     // apply atomic filters
     if(!AtomicFilters.empty()) {
         for(Filter* filter : AtomicFilters) {
-            image_.forEach<Pixel>(
+            imagec.forEach<Pixel>(
                     [&](Pixel& pixel, const int* position) -> void {
                             filter->applyAtomic(pixel, position);
 
@@ -74,10 +75,10 @@ cv::Mat FilterApplier::applyFilters(cv::Mat image_) {
     // Apply ordinary filters
     for(Filter* filter : OrdinaryFilters) {
         filter->apply();
-        image_ = *filter->getResult();
+        imagec = filter->getResult();
     }
     // return the result
-    return image_;
+    result = imagec;
 }
 void FilterApplier::reset() {
     // remove all filters

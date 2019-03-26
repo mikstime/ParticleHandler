@@ -7,7 +7,8 @@ find_package(OpenCV REQUIRED)
 include_directories(include)
 set(SOURCE_LIB include/Filter.h lib/Filter.cpp
                include/EmphasizeFilter.h lib/EmphasizeFilter.cpp
-               include/BandWFilter.h lib/BandWFilter.cpp)
+               include/BandWFilter.h lib/BandWFilter.cpp
+               include/EmphasizeFilterSettinger.h lib/EmphasizeFilterSettinger.cpp)
 
 add_library(filters STATIC ${SOURCE_LIB})
 

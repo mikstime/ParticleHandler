@@ -13,20 +13,20 @@
 class EmphasizeFilter: public Filter {
     cv::Mat image;
     bool __hasAtomic = false;
-    uint8_t radius = 3;
-    uint8_t lambda = 7;
+    uint8_t radius;
+    uint8_t lambda;
+protected:
+    void setRadius(uint8_t);
+    void setLambda(uint8_t);
 public:
     bool hasAtomic();
     void applyAtomic(Pixel&, const int*);
     void apply();
-
-    void setImage(cv::Mat*);
-    cv::Mat* getResult();
+    cv::Mat getResult();
+    void setImage(const cv::Mat&);
     EmphasizeFilter();
-    //@TODO implement parameter changing
-    EmphasizeFilter(std::vector<uint8_t >);
 
-    void updateParams(std::vector<uint8_t >);
+    friend class EmphasizeFilterSettinger;
 };
 
 
