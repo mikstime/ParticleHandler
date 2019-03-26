@@ -30,7 +30,6 @@ void FrameHandler::__setup() {
     positionTracker = new PositionTracker;
 }
 void FrameHandler::__process() {
-    //@TODO Make filter parameters changeable. Probably through vector of params
     __filter();
     __distinguish();
     __track();

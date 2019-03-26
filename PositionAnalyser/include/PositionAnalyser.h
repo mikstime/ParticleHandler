@@ -29,7 +29,6 @@ public:
     void loadVideo(std::string);
     void savePositionList(std::string);
     void ProcessVideo();
-    void setBorders(uint16_t, uint16_t);
     PositionAnalyser();
     void reset();
     //

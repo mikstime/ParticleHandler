@@ -12,13 +12,15 @@ int main() {
     auto PTS = (PositionTrackerSettinger*) SettingsHandler::getPTS();
     auto PHS = (PositionHandlerSettinger*) SettingsHandler::getPHS();
     auto FAS = (FilterApplierSettinger*) SettingsHandler::getFAS();
-    auto EFS = (EmphasizeFilterSettinger*) SettingsHandler::getEFH();
+    auto EFS = (EmphasizeFilterSettinger*) SettingsHandler::getEFS();
+    auto VRS = (VideoReaderSettinger*) SettingsHandler::getVRS();
 
     auto fh = pa->getFrameHandler();
     auto fa = fh->getImageHandler()->getFilterApplier();
     auto pd = fh->getParticleDistinguisher();
     auto ph = pa->getPositionHandler();
     auto pt = fh->getPositionTracker();
+    auto vr = pa->getVideoReader();
 
     Filter* blackAndWhiteFilter = new BandWFilter;
     Filter* emphasizeFilter = new EmphasizeFilter;
@@ -32,8 +34,9 @@ int main() {
     FAS->addFilter(fa, blackAndWhiteFilter);
     FAS->addFilter(fa, emphasizeFilter);
 
+    VRS->setBorders(vr, 1, 10);
+
     pa->loadVideo("../test.avi");
-    pa->setBorders(1, 10);
     pa->ProcessVideo();
     pa->savePositionList("../logs.txt");
     return 0;

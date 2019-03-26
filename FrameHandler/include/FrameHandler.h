@@ -11,7 +11,6 @@
 #include "PositionTracker.h"
 #include "TYPES.h"
 typedef std::vector<double> ParamList;
-//@TODO Add method .Clear()
 class FrameHandler {
     ImageHandler* imageHandler;
     PositionTracker* positionTracker;

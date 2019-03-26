@@ -8,7 +8,6 @@
 #include "TYPES.h"
 void PositionAnalyser::__clearResults() {
     currentPositions.clear();
-    //@TODO make all modules 'resettable'
 
     videoReader->reset();
     frameHandler->reset();
@@ -36,6 +35,8 @@ void PositionAnalyser::ProcessVideo() {
     //@TODO do it in parallel
     //@TODO results could be stored in map by thread ID
     //@TODO and combined after processing
+    start = videoReader->getLowerBorder();
+    end = videoReader->getUpperBorder();
     for(uint16_t i = start; i < end; i += 2) {
         __process2Frames(i, i + 1);
         positionHandler->setPositionsToProcess(currentPositions);
@@ -52,14 +53,6 @@ void PositionAnalyser::savePositionList(std::string path) {
 }
 void PositionAnalyser::reset() {
     __clearResults();
-}
-void PositionAnalyser::setBorders(uint16_t start_, uint16_t end_) {
-    if(start_ > end_)
-        setBorders(end_, start_);
-    uint16_t size = videoReader->getVideoSize();
-    start = start_ < size ? start_ : size - 1;
-    end = end_ < size ? end_ : size - 1;
-
 }
 FrameHandler* PositionAnalyser::getFrameHandler() {
     return frameHandler;

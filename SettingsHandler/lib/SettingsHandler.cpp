@@ -33,8 +33,12 @@ Settinger* SettingsHandler::getPHS() {
     = new PositionHandlerSettinger;
     return positionHandlerSettinger;
 }
-Settinger* SettingsHandler::getEFH() {
+Settinger* SettingsHandler::getEFS() {
     static Settinger* emphasizeHandlerSettinger
     = new EmphasizeFilterSettinger;
     return  emphasizeHandlerSettinger;
+}
+Settinger* SettingsHandler::getVRS() {
+    static Settinger* videoReaderSettinger = new VideoReaderSettinger;
+    return videoReaderSettinger;
 }

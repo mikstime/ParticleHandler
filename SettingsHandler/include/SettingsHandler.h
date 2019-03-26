@@ -11,15 +11,16 @@
 #include "PositionTrackerSettinger.h"
 #include "PositionHandlerSettinger.h"
 #include "EmphasizeFilterSettinger.h"
+#include "VideoReaderSettinger.h"
 class SettingsHandler {
-    //@TODO change declaration
     SettingsHandler();
 public:
     static Settinger* getFAS();
     static Settinger* getPDS();
     static Settinger* getPTS();
     static Settinger* getPHS();
-    static Settinger* getEFH();
+    static Settinger* getEFS();
+    static Settinger* getVRS();
     static SettingsHandler* getInstance();
 };
 

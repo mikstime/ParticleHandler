@@ -53,18 +53,21 @@ void PositionHandler::__combinePositions() {
         }
     }
     // For each not detected particle copy previous values
-    //@TODO refactor
+    uint8_t positionsSize;
+    // Compute how many copies must be added
+    for(int j = 0; j < positionsToProcess.size(); j++) {
+        if(toProcessFound[j]) {
+            positionsSize = positionsToProcess[j].size();
+            break;
+        }
+    }
+
     for (int i = 0; i < processedPositions.size(); i++) {
         if (!processedFound[i]) {
             uint16_t lastInd = processedPositions[i].size() - 1;
-            for (int j = 0; j < positionsToProcess.size(); j++) {
-                if (toProcessFound[j]) {
-                    // To make all positions the same size
-                    for (int k = 0; k < positionsToProcess[j].size(); k++)
-                        processedPositions[i].push_back(processedPositions[i][lastInd]);
-                    break;
-                }
-            }
+
+            for (int k = 0; k < positionsSize; k++)
+                processedPositions[i].push_back(processedPositions[i][lastInd]);
         }
     }
     __reset();
