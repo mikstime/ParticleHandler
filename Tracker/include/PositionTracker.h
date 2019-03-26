@@ -22,9 +22,9 @@ protected:
     void setRadius(uint8_t);
 public:
     uint8_t getRadius();
-    void setCurrentCenters(Coordinates);
-    void setNextCenters(Coordinates);
-    void setCenters(Coordinates, Coordinates);
+    void setCurrentCenters(const Coordinates&);
+    void setNextCenters(const Coordinates&);
+    void setCenters(const Coordinates&, const Coordinates&);
     std::vector<Coordinates> getUnitedCenters();
     void analyse();
     void reset();

@@ -33,3 +33,8 @@ Settinger* SettingsHandler::getPHS() {
     = new PositionHandlerSettinger;
     return positionHandlerSettinger;
 }
+Settinger* SettingsHandler::getEFH() {
+    static Settinger* emphasizeHandlerSettinger
+    = new EmphasizeFilterSettinger;
+    return  emphasizeHandlerSettinger;
+}

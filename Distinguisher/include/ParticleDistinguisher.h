@@ -23,12 +23,11 @@ class ParticleDistinguisher {
     void __filterResults();
     void __computeCenters();
     void __clearResults();
-    void __setup();
 
 protected:
 public:
     //setters
-    void setImage(cv::Mat);
+    void setImage(const cv::Mat&);
     void setParticleRadius(uint8_t);
     //getters
     uint8_t getRadius();
@@ -37,7 +36,7 @@ public:
     Coordinates getCenters();
     //constructors
     ParticleDistinguisher();
-    ParticleDistinguisher(uint8_t);
+    void process();
     void reset();
     friend class ParticleDistinguisherSettinger;
 };

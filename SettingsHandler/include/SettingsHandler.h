@@ -10,6 +10,7 @@
 #include "ParticleDistinguisherSettinger.h"
 #include "PositionTrackerSettinger.h"
 #include "PositionHandlerSettinger.h"
+#include "EmphasizeFilterSettinger.h"
 class SettingsHandler {
     //@TODO change declaration
     SettingsHandler();
@@ -18,6 +19,7 @@ public:
     static Settinger* getPDS();
     static Settinger* getPTS();
     static Settinger* getPHS();
+    static Settinger* getEFH();
     static SettingsHandler* getInstance();
 };
 

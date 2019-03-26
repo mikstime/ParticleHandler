@@ -12,12 +12,12 @@
 bool EmphasizeFilter::hasAtomic() {
     return __hasAtomic;
 }
-cv::Mat* EmphasizeFilter::getResult() {
-    return &image;
+cv::Mat EmphasizeFilter::getResult() {
+    return image;
 }
 
-void EmphasizeFilter::setImage(cv::Mat *image_) {
-    image = *image_;
+void EmphasizeFilter::setImage(const cv::Mat& image_) {
+    image = image_;
 }
 void EmphasizeFilter::applyAtomic(Pixel &, const int *) {
     //Do nothing
@@ -34,15 +34,12 @@ void EmphasizeFilter::apply() {
     cv::dilate(image, image, getStructuringElement(cv::MORPH_RECT, cv::Size (radius, radius)));
 
 }
-void EmphasizeFilter::updateParams(std::vector<uint8_t> params) {
-    if(params.size() > 0)
-        radius = params[0];
-    if(params.size() > 1)
-        lambda = params[1];
-}
-EmphasizeFilter::EmphasizeFilter(std::vector<uint8_t> params) {
-    updateParams(params);
-}
 EmphasizeFilter::EmphasizeFilter() {
     radius = lambda = 1;
+}
+void EmphasizeFilter::setRadius(uint8_t radius_) {
+    radius = radius_;
+}
+void EmphasizeFilter::setLambda(uint8_t lambda_) {
+    lambda = lambda_;
 }

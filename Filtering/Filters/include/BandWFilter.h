@@ -9,15 +9,14 @@
 #include "Filter.h"
 #include <opencv2/core/core.hpp>
 class BandWFilter: public Filter {
-    cv::Mat* image;
+    cv::Mat image;
     bool __hasAtomic = true;
 public:
-    void setImage(cv::Mat*);
+    void setImage(const cv::Mat&);
     void apply();
     void applyAtomic(Pixel&, const int*);
-    cv::Mat* getResult();
+    cv::Mat getResult();
     bool hasAtomic();
-    void updateParams(std::vector<uint8_t >);
 };
 
 

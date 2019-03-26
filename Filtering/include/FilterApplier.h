@@ -21,7 +21,7 @@ protected:
     void deleteFilters();
 public:
     friend class FilterApplierSettinger;
-    cv::Mat applyFilters(cv::Mat);
+    void applyFilters(const cv::Mat&, cv::Mat&);
 
     void reset();
 };

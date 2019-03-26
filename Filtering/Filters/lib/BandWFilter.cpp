@@ -7,14 +7,14 @@
 #include "BandWFilter.h"
 #include "TYPES.h"
 
-void BandWFilter::setImage(cv::Mat *image_) {
+void BandWFilter::setImage(const cv::Mat& image_) {
     image = image_;
 }
-cv::Mat* BandWFilter::getResult() {
+cv::Mat BandWFilter::getResult() {
     return image;
 }
 void BandWFilter::apply() {
-    image->forEach<Pixel>(
+    image.forEach<Pixel>(
             [&](Pixel& pixel, const int* position) {
                 applyAtomic(pixel, position);
             }
@@ -26,7 +26,4 @@ void BandWFilter::applyAtomic(Pixel & pixel, const int *position) {
 }
 bool BandWFilter::hasAtomic() {
     return __hasAtomic;
-}
-void BandWFilter::updateParams(std::vector<uint8_t> params) {
-
 }

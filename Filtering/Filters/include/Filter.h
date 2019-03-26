@@ -12,12 +12,10 @@ class Filter {
 
 public:
     virtual bool hasAtomic() = 0;
-    virtual void setImage(cv::Mat*) = 0;
+    virtual void setImage(const cv::Mat&) = 0;
     virtual void apply() = 0;
     virtual void applyAtomic(Pixel&, const int*) = 0;
-    virtual cv::Mat* getResult() = 0;
-
-    virtual void updateParams(std::vector<uint8_t >) = 0;
+    virtual cv::Mat getResult() = 0;
 };
 
 

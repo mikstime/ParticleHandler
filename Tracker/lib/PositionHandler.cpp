@@ -8,7 +8,7 @@
 std::vector<Coordinates> PositionHandler::getProcessedPositions() {
     return processedPositions;
 }
-void PositionHandler::setPositionsToProcess(std::vector<Coordinates> positionsToProcess_) {
+void PositionHandler::setPositionsToProcess(const std::vector<Coordinates>& positionsToProcess_) {
     positionsToProcess = positionsToProcess_;
     __isCombined = false;
     if(processedPositions.size() == 0) {

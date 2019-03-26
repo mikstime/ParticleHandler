@@ -14,7 +14,7 @@ class ImageHandler {
     FilterApplier* filterApplier = new FilterApplier;
 public:
     // Operations with Image
-    void setImage(cv::Mat);
+    void setImage(cv::Mat&);
     cv::Mat getImage();
 
     FilterApplier* getFilterApplier();

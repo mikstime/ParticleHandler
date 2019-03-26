@@ -9,15 +9,15 @@
 #include <iostream>
 #include "TYPES.h"
 
-void PositionTracker::setCenters(Coordinates currentCenters_, Coordinates nextCenters_) {
+void PositionTracker::setCenters(const Coordinates& currentCenters_, const Coordinates& nextCenters_) {
     __clearResults();
     currentCenters = currentCenters_;
     nextCenters = nextCenters_;
 }
-void PositionTracker::setCurrentCenters(Coordinates currentCenters_) {
+void PositionTracker::setCurrentCenters(const Coordinates& currentCenters_) {
     currentCenters = currentCenters_;
 }
-void PositionTracker::setNextCenters(Coordinates nextCenters_) {
+void PositionTracker::setNextCenters(const Coordinates& nextCenters_) {
     nextCenters = nextCenters_;
 }
 
