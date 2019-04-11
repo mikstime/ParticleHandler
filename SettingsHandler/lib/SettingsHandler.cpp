@@ -12,12 +12,6 @@ SettingsHandler* SettingsHandler::getInstance() {
     static SettingsHandler* INSTANCE = new SettingsHandler;
     return INSTANCE;
 }
-
-Settinger* SettingsHandler::getPDS() {
-    static Settinger* particleDistinguisherSettinger
-    = new ParticleDistinguisherSettinger;
-    return particleDistinguisherSettinger;
-}
 Settinger* SettingsHandler::getFAS() {
     static Settinger* filterApplierSettinger
     = new FilterApplierSettinger;
@@ -32,11 +26,6 @@ Settinger* SettingsHandler::getPHS() {
     static Settinger* positionHandlerSettinger
     = new PositionHandlerSettinger;
     return positionHandlerSettinger;
-}
-Settinger* SettingsHandler::getEFS() {
-    static Settinger* emphasizeHandlerSettinger
-    = new EmphasizeFilterSettinger;
-    return  emphasizeHandlerSettinger;
 }
 Settinger* SettingsHandler::getVRS() {
     static Settinger* videoReaderSettinger = new VideoReaderSettinger;

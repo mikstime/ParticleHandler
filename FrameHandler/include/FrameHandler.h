@@ -38,8 +38,11 @@ public:
     FrameHandler();
     void reset();
     //
+    void setImageHandler(ImageHandler*);
     ImageHandler* getImageHandler();
+    void setParticleDistinguisher(ParticleDistinguisher*);
     ParticleDistinguisher* getParticleDistinguisher();
+    void setPositionTracker(PositionTracker*);
     PositionTracker* getPositionTracker();
 
 };

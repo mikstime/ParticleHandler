@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-#include_directories(${CMAKE_SOURCE_DIR}/Filtering/Filters/include)
 project(settingsHandler)
 
 set(CMAKE_CXX_STANDARD 17)

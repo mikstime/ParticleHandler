@@ -3,8 +3,6 @@
 //
 
 #include "ImageHandler.h"
-#include "FilterApplierSettinger.h"
-#include "SettingsHandler.h"
 #include "opencv2/core.hpp"
 #include <vector>
 #include <random>

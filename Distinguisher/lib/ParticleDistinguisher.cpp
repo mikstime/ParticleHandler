@@ -77,10 +77,7 @@ std::vector<Points> ParticleDistinguisher::getContours() {
 Coordinates ParticleDistinguisher::getCenters() {
     return centers;
 }
-//Constructors
-ParticleDistinguisher::ParticleDistinguisher() {
 
-}
 void ParticleDistinguisher::__clearResults() {
     contours.clear();
     centers.clear();
@@ -91,4 +88,17 @@ void ParticleDistinguisher::reset() {
 void ParticleDistinguisher::process() {
     __clearResults();
     __process();
+}
+void ParticleDistinguisher::setParams(const json& objDesc) {
+    if(!isValidProto(objDesc)) {
+        return;
+    }
+
+    particleRadius = objDesc["particleRadius"].get<uint8_t >();
+
+}
+bool ParticleDistinguisher::isValidProto(const json &objDesc) {
+    //@particleRadius is positive number.
+    return objDesc["particleRadius"].type() == json::value_t::number_unsigned &&
+           objDesc["particleRadius"].get<uint8_t >() > 0;
 }

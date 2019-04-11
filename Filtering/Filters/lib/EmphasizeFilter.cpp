@@ -7,8 +7,10 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <vector>
+#include <iostream>
 #include "TYPES.h"
-
+#include <limits>
+using nlohmann::json;
 bool EmphasizeFilter::hasAtomic() {
     return __hasAtomic;
 }
@@ -37,9 +39,22 @@ void EmphasizeFilter::apply() {
 EmphasizeFilter::EmphasizeFilter() {
     radius = lambda = 1;
 }
-void EmphasizeFilter::setRadius(uint8_t radius_) {
-    radius = radius_;
+void EmphasizeFilter::setParams(const nlohmann::json & FilterDesc) {
+
+    if(!isValidProto(FilterDesc))
+        return;
+    // radius should be odd number
+    radius = FilterDesc["radius"].get<uint8_t>() % 2 == 1 ?
+        FilterDesc["radius"].get<uint8_t>()  :
+        FilterDesc["radius"].get<uint8_t>()  + 1 ;
+    // lambda is just a positive integer
+    lambda = FilterDesc["lambda"].get<uint8_t>();
+
 }
-void EmphasizeFilter::setLambda(uint8_t lambda_) {
-    lambda = lambda_;
+bool EmphasizeFilter::isValidProto(const nlohmann::json &objDesc) {
+
+    return objDesc["radius"].type() == json::value_t::number_unsigned &&
+           objDesc["lambda"].type() == json::value_t::number_unsigned &&
+           objDesc["radius"].get<uint8_t >() > 0 && objDesc["radius"].get<uint8_t >() < 100 &&
+           objDesc["lambda"].get<uint8_t >() > 0 && objDesc["lambda"].get<uint8_t >() < 100;
 }

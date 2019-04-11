@@ -5,12 +5,11 @@
 #include <iostream>
 #include <opencv2/imgproc.hpp>
 #include "FrameHandler.h"
-#include "BandWFilter.h"
+#include "GrayScaleFilter.h"
 #include "EmphasizeFilter.h"
 #include "TYPES.h"
 #include "SettingsHandler.h"
 #include "FilterApplierSettinger.h"
-#include "ParticleDistinguisherSettinger.h"
 void FrameHandler::setFrames(const cv::Mat& currentFrame_, const cv::Mat& nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
@@ -96,4 +95,17 @@ ParticleDistinguisher* FrameHandler::getParticleDistinguisher() {
 }
 PositionTracker* FrameHandler::getPositionTracker() {
     return positionTracker;
+}
+void FrameHandler::setParticleDistinguisher
+(ParticleDistinguisher *particleDistinguisher_) {
+
+    particleDistinguisher = particleDistinguisher_;
+}
+void FrameHandler::setImageHandler(ImageHandler *imageHandler_) {
+
+    imageHandler = imageHandler_;
+}
+void FrameHandler::setPositionTracker(PositionTracker *positionTracker_) {
+
+    positionTracker = positionTracker_;
 }

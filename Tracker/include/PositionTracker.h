@@ -10,7 +10,7 @@
 #include "TYPES.h"
 #include "PositionLogger.h"
 
-
+//@TODO replace PostionTracker with PositionHandler
 class PositionTracker {
     uint8_t particleRadius;
     Coordinates currentCenters, nextCenters;

@@ -15,18 +15,17 @@ class EmphasizeFilter: public Filter {
     bool __hasAtomic = false;
     uint8_t radius;
     uint8_t lambda;
-protected:
-    void setRadius(uint8_t);
-    void setLambda(uint8_t);
+    bool isValidProto(const nlohmann::json&);
 public:
-    bool hasAtomic();
-    void applyAtomic(Pixel&, const int*);
-    void apply();
-    cv::Mat getResult();
-    void setImage(const cv::Mat&);
+    virtual bool hasAtomic();
+    virtual void applyAtomic(Pixel&, const int*);
+    virtual void apply();
+    virtual cv::Mat getResult();
+    virtual void setImage(const cv::Mat&);
     EmphasizeFilter();
 
-    friend class EmphasizeFilterSettinger;
+    virtual void setParams(const nlohmann::json&);
+
 };
 
 

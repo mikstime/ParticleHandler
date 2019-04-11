@@ -8,7 +8,9 @@
 
 #include "opencv2/core/core.hpp"
 #include "TYPES.h"
-class ParticleDistinguisher {
+#include <LoadableObjectBase.h>
+using nlohmann::json;
+class ParticleDistinguisher : public LoadableObjectBase {
     cv::Mat image;
     // Radius of a particle
     uint8_t particleRadius;
@@ -23,8 +25,7 @@ class ParticleDistinguisher {
     void __filterResults();
     void __computeCenters();
     void __clearResults();
-
-protected:
+    bool isValidProto(const json&);
 public:
     //setters
     void setImage(const cv::Mat&);
@@ -35,10 +36,10 @@ public:
     std::vector<Points> getContours();
     Coordinates getCenters();
     //constructors
-    ParticleDistinguisher();
+    ParticleDistinguisher() = default;
     void process();
     void reset();
-    friend class ParticleDistinguisherSettinger;
+    void setParams(const json&) override;
 };
 
 

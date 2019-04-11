@@ -7,19 +7,15 @@
 
 #include "TYPES.h"
 #include "FilterApplierSettinger.h"
-#include "ParticleDistinguisherSettinger.h"
 #include "PositionTrackerSettinger.h"
 #include "PositionHandlerSettinger.h"
-#include "EmphasizeFilterSettinger.h"
 #include "VideoReaderSettinger.h"
 class SettingsHandler {
     SettingsHandler();
 public:
     static Settinger* getFAS();
-    static Settinger* getPDS();
     static Settinger* getPTS();
     static Settinger* getPHS();
-    static Settinger* getEFS();
     static Settinger* getVRS();
     static SettingsHandler* getInstance();
 };

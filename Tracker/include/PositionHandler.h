@@ -15,7 +15,7 @@ class PositionHandler {
     bool __isCombined = false;
     std::vector<Coordinates> processedPositions, positionsToProcess;
     std::map<int, bool> processedFound;
-    std::map<int, bool > toProcessFound;
+    std::map<int, bool> toProcessFound;
     void __combinePositions();
     //Do some things after combining positionLists
     void __combined();
