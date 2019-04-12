@@ -6,7 +6,7 @@
 #define PARTICLEDISTINGUISHER_FRAMEHANDLER_H
 
 
-#include "ParticleDistinguisher.h"
+#include "ParticleRecognizer.h"
 #include "PositionTracker.h"
 #include "TYPES.h"
 #include <FilterApplier.h>
@@ -16,13 +16,31 @@ namespace mbtsky {
     using namespace mbtsky;
 
     class FrameHandler {
+        //*********************************************************************
+        // filterApplier is used for applying filters =)
+        //*********************************************************************
         FilterApplier* filterApplier;
+        //*********************************************************************
+        // particleRecognizer is used for computing position of centers
+        // for each particle in both frames
+        //*********************************************************************
+        ParticleRecognizer *particleRecognizer;
+        //*********************************************************************
+        // positionTracker tracks position change between two frames
+        //*********************************************************************
         PositionTracker *positionTracker;
-        ParticleDistinguisher *particleDistinguisher;
-
+        //*********************************************************************
+        // store two frames for processing
+        //*********************************************************************
         cv::Mat currentFrame, nextFrame;
-
+        //*********************************************************************
+        // coordinates of centers for both frames
+        //*********************************************************************
         Coordinates currentCenters, nextCenters;
+        //*********************************************************************
+        // corresponding positions for the particles from the second frame to
+        // the positions in the first one
+        //*********************************************************************
         std::vector<Coordinates> centerPositionChange;
 
         void __process();
@@ -38,6 +56,13 @@ namespace mbtsky {
         void __clearResults();
 
     public:
+
+        void ProcessFrames();
+
+        FrameHandler();
+
+        void reset();
+
         void setFrames(const cv::Mat &, const cv::Mat &);
 
         void setCurrentFrame(const cv::Mat &);
@@ -55,24 +80,17 @@ namespace mbtsky {
         std::vector<Coordinates> getPositionChange() {
             return centerPositionChange;
         };
-
-        void ProcessFrames();
-
-        FrameHandler();
-
-        void reset();
-
         //
         FilterApplier* getFilterApplier() {
             return filterApplier;
         }
 
-        void setParticleDistinguisher(ParticleDistinguisher * pd) {
-            particleDistinguisher = pd;
+        void setParticleRecognizer(ParticleRecognizer * pd) {
+            particleRecognizer = pd;
         };
 
-        ParticleDistinguisher *getParticleDistinguisher() {
-            return particleDistinguisher;
+        ParticleRecognizer *getParticleRecognizer() {
+            return particleRecognizer;
         };
 
         void setPositionTracker(PositionTracker *pt) {

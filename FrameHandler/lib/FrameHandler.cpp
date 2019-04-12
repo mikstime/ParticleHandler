@@ -24,7 +24,7 @@ void FrameHandler::setNextFrame(const cv::Mat& nextFrame_) {
 }
 void FrameHandler::__setup() {
     filterApplier = new FilterApplier;
-    particleDistinguisher = new ParticleDistinguisher;
+    particleRecognizer = new ParticleRecognizer;
     positionTracker = new PositionTracker;
 }
 void FrameHandler::__process() {
@@ -42,10 +42,10 @@ void FrameHandler::__distinguish() {
     cv::Mat frame1gray, frame2gray;
     cv::cvtColor(currentFrame, frame1gray, cv::COLOR_BGR2GRAY);
     cv::cvtColor(nextFrame, frame2gray, cv::COLOR_BGR2GRAY);
-    particleDistinguisher->process(frame1gray);
-    currentCenters = particleDistinguisher->getCenters();
-    particleDistinguisher->process(frame2gray);
-    nextCenters = particleDistinguisher->getCenters();
+    particleRecognizer->process(frame1gray);
+    currentCenters = particleRecognizer->getCenters();
+    particleRecognizer->process(frame2gray);
+    nextCenters = particleRecognizer->getCenters();
 
 }
 void FrameHandler::__track() {
@@ -67,6 +67,6 @@ void FrameHandler::__clearResults() {
 void FrameHandler::reset() {
     __clearResults();
     filterApplier->reset();
-    particleDistinguisher->reset();
+    particleRecognizer->reset();
     positionTracker->reset();
 }

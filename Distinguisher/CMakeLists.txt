@@ -5,7 +5,7 @@ project(distinguisher)
 
 find_package(OpenCV REQUIRED)
 
-set(SOURCE_LIB include/ParticleDistinguisher.h lib/ParticleDistinguisher.cpp
+set(SOURCE_LIB include/ParticleRecognizer.h lib/ParticleRecognizer.cpp
         )
 add_library(distinguisher STATIC ${SOURCE_LIB})
 

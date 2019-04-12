@@ -8,12 +8,12 @@
 #include <iostream>
 #include "Filter.h"
 #include "TYPES.h"
-
+using namespace mbtsky;
 void FilterApplier::addFilter(Filter * filter) {
-    // Add filter to the end of filters
+    // Add filter to the end of the list
     filters.push_back(filter);
 }
-int FilterApplier::deleteFilter(Filter *filter_) {
+bool FilterApplier::deleteFilter(Filter *filter_) {
     // Find filter in filters
     int id;
     for(id = 0; id < filters.size(); id++) {
@@ -22,14 +22,14 @@ int FilterApplier::deleteFilter(Filter *filter_) {
     }
     // If no filter was found return -1
     if(id == filters.size())
-        return -1;
+        return false;
     // Otherwise delete it
     for(; id < filters.size() - 1; id++) {
         filters[id] = filters[id + 1];
     }
     filters.pop_back();
     // Return 0 if filter has been deleted
-    return 0;
+    return true;
 }
 
 void FilterApplier::addFilters(std::vector<Filter *> filters_) {

@@ -21,7 +21,7 @@ int main() {
 
     TypeList["PositionHandler"] = &createInstance<PositionHandler>;
     TypeList["PositionTracker"] = &createInstance<PositionTracker>;
-    TypeList["ParticleDistinguisher"] = &createInstance<ParticleDistinguisher>;
+    TypeList["ParticleRecognizer"] = &createInstance<ParticleRecognizer>;
 
     Loader* loader = Loader::instance();
     loader->setObjectTypes(TypeList);
@@ -38,7 +38,7 @@ int main() {
     FilterList.push_back((Filter*)ObjList[1].getObject());
 
     fa->addFilters(FilterList);
-    fh->setParticleDistinguisher((ParticleDistinguisher*)ObjList[2].getObject());
+    fh->setParticleRecognizer((ParticleRecognizer*)ObjList[2].getObject());
     pa->setVideoReader((VideoReader*)ObjList[3].getObject());
     pa->setPositionHandler((PositionHandler*)ObjList[4].getObject());
     fh->setPositionTracker((PositionTracker*)ObjList[5].getObject());

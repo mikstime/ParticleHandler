@@ -9,7 +9,7 @@
       "radius" : 5
     },
     {
-      "name" : "ParticleDistinguisher",
+      "name" : "ParticleRecognizer",
       "particleRadius" : 5
     },
     {

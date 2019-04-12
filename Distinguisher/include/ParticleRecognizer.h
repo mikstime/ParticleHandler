@@ -15,7 +15,7 @@
 #include "TYPES.h"
 using nlohmann::json;
 namespace mbtsky {
-    class ParticleDistinguisher : public LoadableObjectBase {
+    class ParticleRecognizer : public LoadableObjectBase {
         //*************************************************************************
         // image - source image used for particle recognition
         //*************************************************************************
@@ -108,12 +108,12 @@ namespace mbtsky {
         // default constructor.
         // Sets particle's radius to 1
         //*************************************************************************
-        ParticleDistinguisher() { particleRadius = 1; };
+        ParticleRecognizer() { particleRadius = 1; };
 
         //*************************************************************************
         // Copy constructor
         //*************************************************************************
-        ParticleDistinguisher(ParticleDistinguisher &o) {
+        ParticleRecognizer(ParticleRecognizer &o) {
             particleRadius = o.getParticleRadius();
         };
 
