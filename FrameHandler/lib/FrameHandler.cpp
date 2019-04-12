@@ -8,8 +8,6 @@
 #include "GrayScaleFilter.h"
 #include "EmphasizeFilter.h"
 #include "TYPES.h"
-#include "SettingsHandler.h"
-#include "FilterApplierSettinger.h"
 void FrameHandler::setFrames(const cv::Mat& currentFrame_, const cv::Mat& nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;

@@ -31,15 +31,7 @@ int FilterApplier::deleteFilter(Filter *filter_) {
     // Return 0 if filter has been deleted
     return 0;
 }
-void FilterApplier::deleteFilters() {
-    // Remove all filters
-    filters.clear();
-}
-void FilterApplier::setFilter(Filter *filter_) {
-    // Delete all filters and add specific one
-    deleteFilters();
-    addFilter(filter_);
-}
+
 void FilterApplier::addFilters(std::vector<Filter *> filters_) {
     // Concat two vectors
     for(Filter* filter : filters_)

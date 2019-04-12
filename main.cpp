@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include "PositionAnalyser.h"
-#include "SettingsHandler.h"
 #include "EmphasizeFilter.h"
 #include "GrayScaleFilter.h"
 #include <PositionTracker.h>
@@ -26,16 +25,17 @@ int main() {
     for(int i = 0; i < ObjList.size(); i++) {
         std::cout << ObjList[i].getObjectTypeName() << '\n';
     }
-    //@TODO get rid of other settingers
-    auto FAS = (FilterApplierSettinger*) SettingsHandler::getFAS();
 
     auto fh = pa->getFrameHandler();
     auto fa = fh->getImageHandler()->getFilterApplier();
     auto ph = pa->getPositionHandler();
     auto pt = fh->getPositionTracker();
+    std::vector<Filter*> FilterList;
+    FilterList.push_back((Filter*)ObjList[0].getObject());
+    FilterList.push_back((Filter*)ObjList[1].getObject());
 
-    FAS->addFilter(fa, (Filter*)ObjList[0].getObject());
-    FAS->addFilter(fa, (Filter*)ObjList[1].getObject());
+
+    fa->addFilters(FilterList);
     fh->setParticleDistinguisher((ParticleDistinguisher*)ObjList[2].getObject());
     pa->setVideoReader((VideoReader*)ObjList[3].getObject());
     pa->setPositionHandler((PositionHandler*)ObjList[4].getObject());

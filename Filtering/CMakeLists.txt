@@ -8,7 +8,7 @@ find_package(OpenCV REQUIRED)
 
 set(SOURCE_LIB include/FilterApplier.h lib/FilterApplier.cpp
         include/ImageHandler.h lib/ImageHandler.cpp
-        include/FilterApplierSettinger.h lib/FilterApplierSettinger.cpp)
+        )
 add_library(filtering STATIC ${SOURCE_LIB})
 
 include_directories(${OpenCV_INCLUDE_DIRS})
