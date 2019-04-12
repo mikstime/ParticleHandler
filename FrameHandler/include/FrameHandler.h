@@ -10,6 +10,7 @@
 #include "ParticleDistinguisher.h"
 #include "PositionTracker.h"
 #include "TYPES.h"
+#include <PositionHandler.h>
 typedef std::vector<double> ParamList;
 class FrameHandler {
     ImageHandler* imageHandler;

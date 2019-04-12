@@ -5,6 +5,7 @@
 #include <iostream>
 #include "PositionHandler.h"
 #include "TYPES.h"
+#include <json.hpp>
 std::vector<Coordinates> PositionHandler::getProcessedPositions() {
     return processedPositions;
 }
@@ -91,4 +92,12 @@ void PositionHandler::__reset() {
 }
 void PositionHandler::reset() {
     __reset();
+}
+void PositionHandler::setParams(const nlohmann::json & objDesc) {
+    if(!isValidProto(objDesc))
+        return;
+    particleRadius = objDesc["particleRadius"].get<uint8_t >();
+}
+bool PositionHandler::isValidProto(const nlohmann::json & objDesc) {
+    return objDesc["particleRadius"].type() == nlohmann::json::value_t::number_unsigned;
 }

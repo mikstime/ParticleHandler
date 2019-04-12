@@ -4,6 +4,8 @@
 #include "SettingsHandler.h"
 #include "EmphasizeFilter.h"
 #include "GrayScaleFilter.h"
+#include <PositionTracker.h>
+#include <PositionHandler.h>
 #include "Loader.h"
 typedef std::vector<cv::Point> Points;
 template <typename T>
@@ -15,30 +17,30 @@ int main() {
     TypeList["GrayScaleFilter"] = &createInstance<GrayScaleFilter>;
     TypeList["EmphasizeFilter"] = &createInstance<EmphasizeFilter>;
     TypeList["ParticleDistinguisher"] = &createInstance<ParticleDistinguisher>;
-
+    TypeList["VideoReader"] = &createInstance<VideoReader>;
+    TypeList["PositionHandler"] = &createInstance<PositionHandler>;
+    TypeList["PositionTracker"] = &createInstance<PositionTracker>;
+    Loader* loader = Loader::instance();
+    loader->setObjectTypes(TypeList);
+    auto ObjList = loader->parseObjects("../test.json");
+    for(int i = 0; i < ObjList.size(); i++) {
+        std::cout << ObjList[i].getObjectTypeName() << '\n';
+    }
     //@TODO get rid of other settingers
-    auto PTS = (PositionTrackerSettinger*) SettingsHandler::getPTS();
-    auto PHS = (PositionHandlerSettinger*) SettingsHandler::getPHS();
     auto FAS = (FilterApplierSettinger*) SettingsHandler::getFAS();
-    auto VRS = (VideoReaderSettinger*) SettingsHandler::getVRS();
 
     auto fh = pa->getFrameHandler();
     auto fa = fh->getImageHandler()->getFilterApplier();
     auto ph = pa->getPositionHandler();
     auto pt = fh->getPositionTracker();
-    auto vr = pa->getVideoReader();
 
-    Loader* loader = Loader::instance();
-
-    loader->setObjectTypes(TypeList);
-    auto ObjList = loader->parseObjects("../test.json");
-    PHS->setParticleRadius(ph, 10);
-    PTS->setRadius(pt, 10);
-    fh->setParticleDistinguisher((ParticleDistinguisher*)ObjList[2].getObject());
     FAS->addFilter(fa, (Filter*)ObjList[0].getObject());
     FAS->addFilter(fa, (Filter*)ObjList[1].getObject());
+    fh->setParticleDistinguisher((ParticleDistinguisher*)ObjList[2].getObject());
+    pa->setVideoReader((VideoReader*)ObjList[3].getObject());
+    pa->setPositionHandler((PositionHandler*)ObjList[4].getObject());
+    fh->setPositionTracker((PositionTracker*)ObjList[5].getObject());
 
-    VRS->setBorders(vr, 1, 10);
     pa->loadVideo("../test.avi");
     pa->ProcessVideo();
     pa->savePositionList("../logs.txt");

@@ -17,17 +17,3 @@ Settinger* SettingsHandler::getFAS() {
     = new FilterApplierSettinger;
     return filterApplierSettinger;
 }
-Settinger* SettingsHandler::getPTS() {
-    static Settinger* positionTrackerSettinger
-    = new PositionTrackerSettinger;
-    return positionTrackerSettinger;
-}
-Settinger* SettingsHandler::getPHS() {
-    static Settinger* positionHandlerSettinger
-    = new PositionHandlerSettinger;
-    return positionHandlerSettinger;
-}
-Settinger* SettingsHandler::getVRS() {
-    static Settinger* videoReaderSettinger = new VideoReaderSettinger;
-    return videoReaderSettinger;
-}

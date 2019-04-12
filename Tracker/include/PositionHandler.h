@@ -9,8 +9,9 @@
 #include <map>
 #include "opencv2/core/core.hpp"
 #include "TYPES.h"
-
-class PositionHandler {
+#include <LoadableObjectBase.h>
+#include <json.hpp>
+class PositionHandler: public LoadableObjectBase {
     uint8_t particleRadius;
     bool __isCombined = false;
     std::vector<Coordinates> processedPositions, positionsToProcess;
@@ -20,16 +21,16 @@ class PositionHandler {
     //Do some things after combining positionLists
     void __combined();
     void __reset();
-
-protected:
-    void setParticleRadius(uint8_t);
+    bool isValidProto(const nlohmann::json&);
 public:
+    PositionHandler() = default;
+    void setParticleRadius(uint8_t);
     void setPositionsToProcess(const std::vector<Coordinates>&);
     void combine();
     std::vector<Coordinates> getProcessedPositions();
     void reset();
 
-    friend class PositionHandlerSettinger;
+    void setParams(const nlohmann::json&);
 };
 
 

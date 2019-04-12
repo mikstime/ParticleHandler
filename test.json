@@ -1,0 +1,28 @@
+[
+    {
+      "name" : "GrayScaleFilter",
+      "intensity" : 1
+    },
+    {
+      "name" : "EmphasizeFilter",
+      "lambda" : 3,
+      "radius" : 5
+    },
+    {
+      "name" : "ParticleDistinguisher",
+      "particleRadius" : 5
+    },
+    {
+      "name" : "VideoReader",
+      "lowerBorder" : 1,
+      "upperBorder" : 10
+    },
+    {
+      "name" : "PositionHandler",
+      "particleRadius" : 10
+    },
+    {
+      "name" : "PositionTracker",
+      "particleRadius" : 10
+    }
+]

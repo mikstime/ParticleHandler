@@ -33,9 +33,13 @@ public:
     void reset();
     //
     VideoReader* getVideoReader();
+    void setVideoReader(VideoReader*);
     FrameHandler* getFrameHandler();
+    void setFrameHandler(FrameHandler*);
     PositionLogger* getPositionLogger();
+    void setPositionLogger(PositionLogger*);
     PositionHandler* getPositionHandler();
+    void setPositionHandler(PositionHandler*);
 };
 
 

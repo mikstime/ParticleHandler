@@ -52,3 +52,15 @@ uint16_t VideoReader::getLowerBorder() {
 uint16_t VideoReader::getUpperBorder() {
     return upperBorder;
 }
+void VideoReader::setParams(const json &objDesc) {
+
+    if (!isValidProto(objDesc))
+        return;
+    setBorders(objDesc["lowerBorder"].get<uint8_t>(),
+               objDesc["upperBorder"].get<uint8_t>());
+
+}
+bool VideoReader::isValidProto(const json &objDesc) {
+    return objDesc["lowerBorder"].type() == json::value_t::number_unsigned &&
+           objDesc["upperBorder"].type() == json::value_t::number_unsigned;
+}

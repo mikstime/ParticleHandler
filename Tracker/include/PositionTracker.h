@@ -9,26 +9,29 @@
 #include "vector"
 #include "TYPES.h"
 #include "PositionLogger.h"
-
+#include <LoadableObjectBase.h>
+#include <json.hpp>
 //@TODO replace PostionTracker with PositionHandler
-class PositionTracker {
+class PositionTracker: public LoadableObjectBase {
     uint8_t particleRadius;
     Coordinates currentCenters, nextCenters;
     std::vector<Coordinates> unitedCenters;
 
     void __clearResults();
 
-protected:
-    void setRadius(uint8_t);
+    bool isValidProto(const nlohmann::json&);
 public:
+    PositionTracker() = default;
     uint8_t getRadius();
+    void setRadius(uint8_t);
     void setCurrentCenters(const Coordinates&);
     void setNextCenters(const Coordinates&);
     void setCenters(const Coordinates&, const Coordinates&);
     std::vector<Coordinates> getUnitedCenters();
     void analyse();
     void reset();
-    friend class PositionTrackerSettinger;
+
+    void setParams(const nlohmann::json&);
 };
 
 

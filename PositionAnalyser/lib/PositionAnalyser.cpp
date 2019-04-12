@@ -66,3 +66,15 @@ PositionLogger* PositionAnalyser::getPositionLogger() {
 VideoReader* PositionAnalyser::getVideoReader() {
     return videoReader;
 }
+void PositionAnalyser::setVideoReader(VideoReader* videoReader_) {
+    videoReader = videoReader_;
+}
+void PositionAnalyser::setPositionHandler(PositionHandler *positionHandler_) {
+    positionHandler = positionHandler_;
+}
+void PositionAnalyser::setFrameHandler(FrameHandler *frameHandler_) {
+    frameHandler = frameHandler_;
+}
+void PositionAnalyser::setPositionLogger(PositionLogger *positionLogger_) {
+    positionLogger = positionLogger_;
+}

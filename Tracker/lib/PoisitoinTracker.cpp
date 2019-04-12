@@ -72,3 +72,12 @@ void PositionTracker::__clearResults() {
 void PositionTracker::reset() {
     __clearResults();
 }
+void PositionTracker::setParams(const nlohmann::json &objDesc) {
+    //@TODO parse data
+    if(!isValidProto(objDesc))
+        return;
+    particleRadius = objDesc["particleRadius"].get<uint8_t>();
+}
+bool PositionTracker::isValidProto(const nlohmann::json &objDesc) {
+    return objDesc["particleRadius"].type() == nlohmann::json::value_t::number_unsigned;
+}

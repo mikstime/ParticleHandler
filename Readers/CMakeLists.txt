@@ -7,7 +7,7 @@ find_package(OpenCV REQUIRED)
 set(SOURCE_LIB include/FileReader.h lib/FileReader.cpp
                include/ImageReader.h lib/ImageReader.cpp
                include/VideoReader.h lib/VideoReader.cpp
-               include/VideoReaderSettinger.h lib/VideoReaderSettinger.cpp)
+        )
 
 add_library(readers STATIC ${SOURCE_LIB})
 
