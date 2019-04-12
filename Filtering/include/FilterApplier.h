@@ -19,7 +19,7 @@ namespace mbtsky {
         //*********************************************************************
         // filters is used for storing filters =)
         //*********************************************************************
-        std::vector<Filter*> filters;
+        std::vector<filters::Filter*> filters;
 
     public:
         //*********************************************************************
@@ -47,14 +47,14 @@ namespace mbtsky {
         // @param filter
         // append filter for processing
         //*********************************************************************
-        void addFilter(Filter *filter);
+        void addFilter(filters::Filter *filter);
 
         //*********************************************************************
         // addFilters
         // @param filters - array of filters
         // append several filters
         //*********************************************************************
-        void addFilters(std::vector<Filter *>filters);
+        void addFilters(std::vector<filters::Filter *>filters);
 
         //*********************************************************************
         // deleteFilter
@@ -62,7 +62,7 @@ namespace mbtsky {
         // delete specified filter
         // @return - returns true on success
         //*********************************************************************
-        bool deleteFilter(Filter *filter);
+        bool deleteFilter(filters::Filter *filter);
 
         //*********************************************************************
         // reset

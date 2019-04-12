@@ -5,26 +5,34 @@
 #ifndef PARTICLEDISTINGUISHER_EMPHASIZEFILTER_H
 #define PARTICLEDISTINGUISHER_EMPHASIZEFILTER_H
 
-#include <opencv2/core/core.hpp>
 #include "Filter.h"
+#include <opencv2/imgproc.hpp>
 #include <vector>
+#include <limits>
 #include "TYPES.h"
-
+using namespace mbtsky::filters;
 class EmphasizeFilter: public Filter {
     cv::Mat image;
-    bool __hasAtomic = false;
+    const static bool __hasAtomic = false;
     uint8_t radius;
     uint8_t lambda;
     bool isValidProto(const nlohmann::json&);
 public:
-    virtual bool hasAtomic();
-    virtual void applyAtomic(Pixel&, const int*);
-    virtual void apply();
-    virtual cv::Mat getResult();
-    virtual void setImage(const cv::Mat&);
-    EmphasizeFilter();
+    EmphasizeFilter() {
+        radius = lambda = 1;
+    }
+    EmphasizeFilter(EmphasizeFilter& filter) {
+        radius = filter.radius;
+        lambda = filter.lambda;
+        image  = filter.image;
+    }
+    bool hasAtomic() override { return __hasAtomic; };
+    void applyAtomic(Pixel&, const int*) override;
+    void apply() override;
+    cv::Mat& getResult() override;
+    void setImage(const cv::Mat&) override;
 
-    virtual void setParams(const nlohmann::json&);
+    void setParams(const nlohmann::json&) override;
 
 };
 

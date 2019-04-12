@@ -5,7 +5,7 @@
 #include <iostream>
 #include <opencv2/imgproc.hpp>
 #include "FrameHandler.h"
-#include "GrayScaleFilter.h"
+#include "GreyScaleFilter.h"
 #include "EmphasizeFilter.h"
 #include "TYPES.h"
 using namespace mbtsky;

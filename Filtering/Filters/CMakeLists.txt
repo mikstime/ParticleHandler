@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(OpenCV REQUIRED)
 
 include_directories(include)
-set(SOURCE_LIB include/Filter.h lib/Filter.cpp
+set(SOURCE_LIB include/Filter.h
         include/EmphasizeFilter.h lib/EmphasizeFilter.cpp
-        include/GrayScaleFilter.h lib/GrayScaleFilter.cpp)
+        include/GreyScaleFilter.h lib/GreyScaleFilter.cpp)
 
 add_library(filters STATIC ${SOURCE_LIB})
 

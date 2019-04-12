@@ -2,7 +2,7 @@
 #include <iostream>
 #include "PositionAnalyser.h"
 #include "EmphasizeFilter.h"
-#include "GrayScaleFilter.h"
+#include "GreyScaleFilter.h"
 #include <PositionTracker.h>
 #include <PositionHandler.h>
 #include "Loader.h"
@@ -14,11 +14,10 @@ int main() {
     auto pa = new PositionAnalyser;
 
     std::map<std::string, LoadableObjectBase*(*)()> TypeList;
+
     TypeList["VideoReader"] = &createInstance<VideoReader>;
-
-    TypeList["GrayScaleFilter"] = &createInstance<GrayScaleFilter>;
+    TypeList["GreyScaleFilter"] = &createInstance<filters::GreyScaleFilter>;
     TypeList["EmphasizeFilter"] = &createInstance<EmphasizeFilter>;
-
     TypeList["PositionHandler"] = &createInstance<PositionHandler>;
     TypeList["PositionTracker"] = &createInstance<PositionTracker>;
     TypeList["ParticleRecognizer"] = &createInstance<ParticleRecognizer>;

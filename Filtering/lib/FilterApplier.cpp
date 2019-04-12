@@ -5,11 +5,11 @@
 #include "FilterApplier.h"
 
 using namespace mbtsky;
-void FilterApplier::addFilter(Filter * filter) {
+void FilterApplier::addFilter(filters::Filter * filter) {
     // Add filter to the end of the list
     filters.push_back(filter);
 }
-bool FilterApplier::deleteFilter(Filter *filter_) {
+bool FilterApplier::deleteFilter(filters::Filter *filter_) {
     // Find filter in filters
     int id;
     for(id = 0; id < filters.size(); id++) {
@@ -28,44 +28,41 @@ bool FilterApplier::deleteFilter(Filter *filter_) {
     return true;
 }
 
-void FilterApplier::addFilters(std::vector<Filter *> filters_) {
+void FilterApplier::addFilters(std::vector<filters::Filter *> filters_) {
     // Concat two vectors
-    for(Filter* filter : filters_)
+    for(filters::Filter* filter : filters_)
         addFilter(filter);
 }
 
 void FilterApplier::applyFilters(const cv::Mat & image_, cv::Mat & result) {
     // If filter has an atomic operation use it
     // If not just apply it
-    std::vector<Filter*> AtomicFilters;
-    std::vector<Filter*> OrdinaryFilters;
+    std::vector<filters::Filter*> AtomicFilters;
+    std::vector<filters::Filter*> OrdinaryFilters;
     // Set image for each filter and split filters
     cv::Mat imagec(image_);
-    for(Filter* filter : filters) {
+    for(filters::Filter* filter : filters) {
         filter->setImage(imagec);
         if(filter->hasAtomic())
             AtomicFilters.push_back(filter);
         else
             OrdinaryFilters.push_back(filter);
     }
-    // apply atomic filters
-    if(!AtomicFilters.empty()) {
-        for(Filter* filter : AtomicFilters) {
-            imagec.forEach<Pixel>(
-                    [&](Pixel& pixel, const int* position) -> void {
-                            filter->applyAtomic(pixel, position);
-
-                        }
-            );
-        }
-
+    // Apply atomic filters
+    for(filters::Filter* filter : AtomicFilters) {
+        imagec.forEach<Pixel>(
+                [&](Pixel& pixel, const int* position) -> void {
+                    filter->applyAtomic(pixel, position);
+                }
+                );
     }
+
     // Apply ordinary filters
-    for(Filter* filter : OrdinaryFilters) {
+    for(filters::Filter* filter : OrdinaryFilters) {
         filter->apply();
         imagec = filter->getResult();
     }
-    // return the result
+    // Return the result
     result = imagec;
 }
 void FilterApplier::reset() {

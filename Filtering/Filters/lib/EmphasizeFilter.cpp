@@ -4,17 +4,8 @@
 
 #include "EmphasizeFilter.h"
 
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-#include <vector>
-#include <iostream>
-#include "TYPES.h"
-#include <limits>
 using nlohmann::json;
-bool EmphasizeFilter::hasAtomic() {
-    return __hasAtomic;
-}
-cv::Mat EmphasizeFilter::getResult() {
+cv::Mat& EmphasizeFilter::getResult() {
     return image;
 }
 
@@ -36,9 +27,7 @@ void EmphasizeFilter::apply() {
     cv::dilate(image, image, getStructuringElement(cv::MORPH_RECT, cv::Size (radius, radius)));
 
 }
-EmphasizeFilter::EmphasizeFilter() {
-    radius = lambda = 1;
-}
+
 void EmphasizeFilter::setParams(const nlohmann::json & FilterDesc) {
 
     if(!isValidProto(FilterDesc))

@@ -1,6 +1,6 @@
 [
     {
-      "name" : "GrayScaleFilter",
+      "name" : "GreyScaleFilter",
       "intensity" : 1
     },
     {
