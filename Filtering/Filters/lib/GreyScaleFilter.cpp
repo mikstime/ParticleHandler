@@ -6,14 +6,10 @@
 #include "GreyScaleFilter.h"
 using nlohmann::json;
 using namespace mbtsky::filters;
-void GreyScaleFilter::setImage(const cv::Mat& image_) {
-    image = image_;
-}
-cv::Mat& GreyScaleFilter::getResult() {
-    return image;
-}
-void GreyScaleFilter::apply() {
-    image.forEach<Pixel>(
+
+void GreyScaleFilter::apply(const cv::Mat& source, cv::Mat& result) {
+    result = source;
+    result.forEach<Pixel>(
             [&](Pixel& pixel, const int* position) {
                 applyAtomic(pixel, position);
             }

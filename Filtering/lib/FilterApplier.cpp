@@ -3,7 +3,6 @@
 //
 
 #include "FilterApplier.h"
-
 using namespace mbtsky;
 void FilterApplier::addFilter(filters::Filter * filter) {
     // Add filter to the end of the list
@@ -40,9 +39,8 @@ void FilterApplier::applyFilters(const cv::Mat & image_, cv::Mat & result) {
     std::vector<filters::Filter*> AtomicFilters;
     std::vector<filters::Filter*> OrdinaryFilters;
     // Set image for each filter and split filters
-    cv::Mat imagec(image_);
+    result = image_;
     for(filters::Filter* filter : filters) {
-        filter->setImage(imagec);
         if(filter->hasAtomic())
             AtomicFilters.push_back(filter);
         else
@@ -50,7 +48,7 @@ void FilterApplier::applyFilters(const cv::Mat & image_, cv::Mat & result) {
     }
     // Apply atomic filters
     for(filters::Filter* filter : AtomicFilters) {
-        imagec.forEach<Pixel>(
+        result.forEach<Pixel>(
                 [&](Pixel& pixel, const int* position) -> void {
                     filter->applyAtomic(pixel, position);
                 }
@@ -59,11 +57,10 @@ void FilterApplier::applyFilters(const cv::Mat & image_, cv::Mat & result) {
 
     // Apply ordinary filters
     for(filters::Filter* filter : OrdinaryFilters) {
-        filter->apply();
-        imagec = filter->getResult();
+        filter->apply(result, result);
     }
     // Return the result
-    result = imagec;
+    result = result;
 }
 void FilterApplier::reset() {
     // remove all filters

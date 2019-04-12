@@ -19,29 +19,19 @@ namespace mbtsky::filters {
         virtual bool hasAtomic() = 0;
 
         //*********************************************************************
-        // setImage
-        // @param image - image to be modified
-        // Set image for processing
-        //*********************************************************************
-        virtual void setImage(const cv::Mat &image) = 0;
-
-        //*********************************************************************
         // apply
+        // @param image - source image
+        // @param result - resulting image
+        // it can be the same image object!
         // Apply filter for chosen image
         //*********************************************************************
-        virtual void apply() = 0;
+        virtual void apply(const cv::Mat& image, cv::Mat& result) = 0;
 
         //*********************************************************************
         // applyAtomic
         // Apply atomic filter for chosen image
         //*********************************************************************
         virtual void applyAtomic(Pixel &, const int *) = 0;
-
-        //*********************************************************************
-        // getResult
-        // Return result of processing
-        //*********************************************************************
-        virtual cv::Mat &getResult() = 0;
     };
 }
 

@@ -12,10 +12,6 @@ namespace mbtsky::filters {
     using namespace mbtsky::filters;
 
     class GreyScaleFilter : public Filter {
-        //*********************************************************************
-        // image used for processing
-        //*********************************************************************
-        cv::Mat image;
 
         //*********************************************************************
         // always true for GreyScaleFilter
@@ -26,29 +22,51 @@ namespace mbtsky::filters {
         // intensity of greyscale filter
         //*********************************************************************
         double intensity;
-
-        bool isValidProto(const nlohmann::json &);
+        //*********************************************************************
+        // isValidProto
+        // @param json object Descriptor
+        // Validate if descriptor is correct
+        //*********************************************************************
+        bool isValidProto(const nlohmann::json & objDesc);
 
     public:
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
         GreyScaleFilter() {
             intensity = 1;
         }
 
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
         GreyScaleFilter(GreyScaleFilter &grayScaleFilter) {
             intensity = grayScaleFilter.intensity;
-            image = grayScaleFilter.image;
         }
 
-        void setImage(const cv::Mat &) override;
+        //*********************************************************************
+        // apply
+        // Apply filter to image
+        // @params are described in Filter.h
+        //*********************************************************************
+        void apply(const cv::Mat& source, cv::Mat& result) override;
 
-        void apply() override;
-
+        //*********************************************************************
+        // applyAtomic
+        // Apply filter to concrete pixel
+        //*********************************************************************
         void applyAtomic(Pixel &, const int *) override;
 
-        cv::Mat& getResult() override;
-
+        //*********************************************************************
+        // hasAtomic
+        // Always true for GrayScaleFilter
+        //*********************************************************************
         bool hasAtomic() override;
 
+        //*********************************************************************
+        // setParams
+        // Set params from object descriptor
+        //*********************************************************************
         void setParams(const nlohmann::json &) override;
     };
 }

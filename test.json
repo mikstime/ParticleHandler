@@ -6,7 +6,8 @@
     {
       "name" : "EmphasizeFilter",
       "lambda" : 3,
-      "radius" : 5
+      "gaussian" : 7,
+      "dilation" : 3
     },
     {
       "name" : "ParticleRecognizer",

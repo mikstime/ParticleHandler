@@ -5,26 +5,19 @@
 #include "EmphasizeFilter.h"
 
 using nlohmann::json;
-cv::Mat& EmphasizeFilter::getResult() {
-    return image;
-}
-
-void EmphasizeFilter::setImage(const cv::Mat& image_) {
-    image = image_;
-}
 void EmphasizeFilter::applyAtomic(Pixel &, const int *) {
     //Do nothing
 }
-void EmphasizeFilter::apply() {
+void EmphasizeFilter::apply(const cv::Mat& source, cv::Mat& result) {
     // Reduce background noise
-    cv::GaussianBlur(image, image, cv::Size(2 * radius + 1, 2 * radius + 1), 0, 0);
+    cv::GaussianBlur(source, result, cv::Size(gaussian, gaussian), 0, 0);
     // Remove false particles
-    cv::medianBlur(image, image, lambda);
+    cv::medianBlur(result, result, lambda);
     // Get rid of the background
 
-    cv::threshold(image, image, 120, 255, cv::THRESH_BINARY);
+    cv::threshold(result, result, 120, 255, cv::THRESH_BINARY);
 
-    cv::dilate(image, image, getStructuringElement(cv::MORPH_RECT, cv::Size (radius, radius)));
+    cv::dilate(result, result, getStructuringElement(cv::MORPH_RECT, cv::Size (dilation, dilation)));
 
 }
 
@@ -33,17 +26,17 @@ void EmphasizeFilter::setParams(const nlohmann::json & FilterDesc) {
     if(!isValidProto(FilterDesc))
         return;
     // radius should be odd number
-    radius = FilterDesc["radius"].get<uint8_t>() % 2 == 1 ?
-        FilterDesc["radius"].get<uint8_t>()  :
-        FilterDesc["radius"].get<uint8_t>()  + 1 ;
+    gaussian = FilterDesc["gaussian"].get<uint8_t>() % 2 == 1 ?
+        FilterDesc["gaussian"].get<uint8_t>()  :
+        FilterDesc["gaussian"].get<uint8_t>()  + 1 ;
+    dilation = FilterDesc["dilation"].get<uint8_t >();
     // lambda is just a positive integer
     lambda = FilterDesc["lambda"].get<uint8_t>();
 
 }
 bool EmphasizeFilter::isValidProto(const nlohmann::json &objDesc) {
 
-    return objDesc["radius"].type() == json::value_t::number_unsigned &&
+    return objDesc["gaussian"].type() == json::value_t::number_unsigned &&
            objDesc["lambda"].type() == json::value_t::number_unsigned &&
-           objDesc["radius"].get<uint8_t >() > 0 && objDesc["radius"].get<uint8_t >() < 100 &&
-           objDesc["lambda"].get<uint8_t >() > 0 && objDesc["lambda"].get<uint8_t >() < 100;
+           objDesc["dilation"].type() == json::value_t::number_unsigned;
 }

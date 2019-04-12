@@ -11,30 +11,79 @@
 #include <limits>
 #include "TYPES.h"
 using namespace mbtsky::filters;
-class EmphasizeFilter: public Filter {
-    cv::Mat image;
-    const static bool __hasAtomic = false;
-    uint8_t radius;
-    uint8_t lambda;
-    bool isValidProto(const nlohmann::json&);
-public:
-    EmphasizeFilter() {
-        radius = lambda = 1;
-    }
-    EmphasizeFilter(EmphasizeFilter& filter) {
-        radius = filter.radius;
-        lambda = filter.lambda;
-        image  = filter.image;
-    }
-    bool hasAtomic() override { return __hasAtomic; };
-    void applyAtomic(Pixel&, const int*) override;
-    void apply() override;
-    cv::Mat& getResult() override;
-    void setImage(const cv::Mat&) override;
 
-    void setParams(const nlohmann::json&) override;
+namespace mbtsky::filters {
 
-};
+    class EmphasizeFilter : public Filter {
 
+        //*********************************************************************
+        // always false for EmphasizeFilter
+        //*********************************************************************
+        const static bool __hasAtomic = false;
 
+        //*********************************************************************
+        // Used for GaussianFilter, always odd
+        //*********************************************************************
+        uint8_t gaussian;
+
+        //*********************************************************************
+        // Dilation radius
+        //*********************************************************************
+        uint8_t dilation;
+
+        //*********************************************************************
+        // MedianBlur param
+        //*********************************************************************
+        uint8_t lambda;
+
+        //*********************************************************************
+        // isValidProto
+        // Validate json object descriptor
+        //*********************************************************************
+        bool isValidProto(const nlohmann::json &);
+
+    public:
+
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
+        EmphasizeFilter() {
+            gaussian = dilation = lambda = 1;
+        }
+
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        EmphasizeFilter(EmphasizeFilter &filter) {
+            gaussian = filter.gaussian;
+            dilation = filter.dilation;
+            lambda = filter.lambda;
+        }
+
+        //*********************************************************************
+        // hasAtomic
+        // always false for EmphasizeFilter
+        //*********************************************************************
+        bool hasAtomic() override { return __hasAtomic; };
+
+        //*********************************************************************
+        // applyAtomic
+        // described in Filter.h
+        //*********************************************************************
+        void applyAtomic(Pixel &, const int *) override;
+
+        //*********************************************************************
+        // apply
+        // described in Filter.h
+        //*********************************************************************
+        void apply(const cv::Mat &source, cv::Mat &result) override;
+
+        //*********************************************************************
+        // setParams
+        // Set params from object descriptor
+        //*********************************************************************
+        void setParams(const nlohmann::json &) override;
+
+    };
+}
 #endif //PARTICLEDISTINGUISHER_EMPHASIZEFILTER_H
