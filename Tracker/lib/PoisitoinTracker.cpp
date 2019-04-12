@@ -3,30 +3,19 @@
 //
 
 #include "PositionTracker.h"
-#include "opencv2/core/core.hpp"
-#include "vector"
-#include <map>
-#include <iostream>
-#include "TYPES.h"
-
-void PositionTracker::setCenters(const Coordinates& currentCenters_, const Coordinates& nextCenters_) {
-    __clearResults();
-    currentCenters = currentCenters_;
-    nextCenters = nextCenters_;
-}
-void PositionTracker::setCurrentCenters(const Coordinates& currentCenters_) {
-    currentCenters = currentCenters_;
-}
-void PositionTracker::setNextCenters(const Coordinates& nextCenters_) {
-    nextCenters = nextCenters_;
-}
-
-void PositionTracker::analyse() {
+using namespace mbtsky;
+using namespace nlohmann;
+void PositionTracker::analyse(const Coordinates&currentCenters_,
+                              const Coordinates&nextCenters_,
+                              std::vector<Coordinates>& unitedCenters_) {
 
     Coordinate center1, center2;
-    double maxDistSquared = 5 * 4 * particleRadius * particleRadius;
-    std::map<int, bool> concatNext;
 
+    double maxDistSquared = 4 * particleRadius * particleRadius;
+    // for avoiding analyse of processed points
+    std::map<int, bool> concatNext;
+    currentCenters = currentCenters_;
+    nextCenters = nextCenters_;
     for(uint16_t i = 0; i < currentCenters.size(); i++) {
         for(uint16_t j = 0; j < nextCenters.size(); j++) {
             // Skip if already concat to avoid duplicating
@@ -54,15 +43,9 @@ void PositionTracker::analyse() {
         }
     }
     concatNext.clear();
-}
-void PositionTracker::setRadius(uint8_t particleRadius_) {
-    particleRadius = particleRadius_;
-}
-uint8_t PositionTracker::getRadius() {
-    return particleRadius;
-}
-std::vector<Coordinates> PositionTracker::getUnitedCenters() {
-    return unitedCenters;
+    // assign result to unitedCenters_
+    unitedCenters_ = unitedCenters;
+    __clearResults();
 }
 void PositionTracker::__clearResults() {
     currentCenters.clear();
@@ -78,5 +61,5 @@ void PositionTracker::setParams(const nlohmann::json &objDesc) {
     particleRadius = objDesc["particleRadius"].get<uint8_t>();
 }
 bool PositionTracker::isValidProto(const nlohmann::json &objDesc) {
-    return objDesc["particleRadius"].type() == nlohmann::json::value_t::number_unsigned;
+    return objDesc["particleRadius"].type() == json::value_t::number_unsigned;
 }

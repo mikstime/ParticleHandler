@@ -2,12 +2,8 @@
 // Created by Михаил on 2019-03-15.
 //
 
-#include <iostream>
 #include "ParticleRecognizer.h"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/core/core.hpp"
-#include "TYPES.h"
+
 using namespace mbtsky;
 // Private methods
 void ParticleRecognizer::__process() {

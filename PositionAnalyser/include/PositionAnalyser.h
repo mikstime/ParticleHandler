@@ -8,6 +8,7 @@
 
 #include "FrameHandler.h"
 #include "VideoReader.h"
+#include "PositionLogger.h"
 #include "PositionHandler.h"
 #include <string>
 #include <list>

@@ -49,9 +49,7 @@ void FrameHandler::__distinguish() {
 
 }
 void FrameHandler::__track() {
-    positionTracker->setCenters(currentCenters, nextCenters);
-    positionTracker->analyse();
-    centerPositionChange = positionTracker->getUnitedCenters();
+    positionTracker->analyse(currentCenters, nextCenters, centerPositionChange);
 }
 void FrameHandler::ProcessFrames() {
     __process();

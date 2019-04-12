@@ -3,11 +3,7 @@
 //
 
 #include "FilterApplier.h"
-#include <opencv2/core/core.hpp>
-#include <vector>
-#include <iostream>
-#include "Filter.h"
-#include "TYPES.h"
+
 using namespace mbtsky;
 void FilterApplier::addFilter(Filter * filter) {
     // Add filter to the end of the list

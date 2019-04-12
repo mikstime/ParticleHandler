@@ -6,10 +6,12 @@
 #define PARTICLEDISTINGUISHER_FILTERAPPLIER_H
 
 
-#include "opencv2/core/mat.hpp"
+#include <opencv2/core/core.hpp>
 #include "Filter.h"
+#include <vector>
 #include <map>
 #include "TYPES.h"
+
 namespace mbtsky {
     using namespace mbtsky;
 
@@ -20,6 +22,17 @@ namespace mbtsky {
         std::vector<Filter*> filters;
 
     public:
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
+        FilterApplier() = default;
+
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        FilterApplier(FilterApplier&filterApplier) {
+                filters = filterApplier.filters;
+        }
 
         //*********************************************************************
         // applyFilters

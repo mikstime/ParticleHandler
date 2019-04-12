@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.13)
 
 
-project(distinguisher)
+project(Recognizer)
 
 find_package(OpenCV REQUIRED)
 
 set(SOURCE_LIB include/ParticleRecognizer.h lib/ParticleRecognizer.cpp
         )
-add_library(distinguisher STATIC ${SOURCE_LIB})
+add_library(Recognizer STATIC ${SOURCE_LIB})
 
 include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(distinguisher ${OpenCV_LIBS})
+target_link_libraries(Recognizer ${OpenCV_LIBS})

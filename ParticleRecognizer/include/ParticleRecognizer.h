@@ -4,11 +4,9 @@
 
 #ifndef PARTICLEDISTINGUISHER_PARTICLEDISTINGUISHER_H
 #define PARTICLEDISTINGUISHER_PARTICLEDISTINGUISHER_H
-
 // Base object for loading json data
 #include <LoadableObjectBase.h>
 // Required openCV modules
-#include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 //
@@ -20,14 +18,17 @@ namespace mbtsky {
         // image - source image used for particle recognition
         //*************************************************************************
         cv::Mat image;
+
         //*************************************************************************
         // particleRadius is used for filtering results
         //*************************************************************************
         uint8_t particleRadius;
+
         //*************************************************************************
         // contours are used for storing filtered contours
         //*************************************************************************
         std::vector<Points> contours;
+
         //*************************************************************************
         // centers store center of each contour
         //*************************************************************************
@@ -66,7 +67,10 @@ namespace mbtsky {
             contours.clear();
             centers.clear();
         };
-
+        //*************************************************************************
+        // isValidProto
+        // setup params using json
+        //*************************************************************************
         bool isValidProto(const json &objDesc);
 
     public:

@@ -20,23 +20,28 @@ namespace mbtsky {
         // filterApplier is used for applying filters =)
         //*********************************************************************
         FilterApplier* filterApplier;
+
         //*********************************************************************
         // particleRecognizer is used for computing position of centers
         // for each particle in both frames
         //*********************************************************************
         ParticleRecognizer *particleRecognizer;
+
         //*********************************************************************
         // positionTracker tracks position change between two frames
         //*********************************************************************
         PositionTracker *positionTracker;
+
         //*********************************************************************
         // store two frames for processing
         //*********************************************************************
         cv::Mat currentFrame, nextFrame;
+
         //*********************************************************************
         // coordinates of centers for both frames
         //*********************************************************************
         Coordinates currentCenters, nextCenters;
+
         //*********************************************************************
         // corresponding positions for the particles from the second frame to
         // the positions in the first one
