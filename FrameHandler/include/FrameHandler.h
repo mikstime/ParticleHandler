@@ -6,47 +6,83 @@
 #define PARTICLEDISTINGUISHER_FRAMEHANDLER_H
 
 
-#include "ImageHandler.h"
 #include "ParticleDistinguisher.h"
 #include "PositionTracker.h"
 #include "TYPES.h"
+#include <FilterApplier.h>
 #include <PositionHandler.h>
 typedef std::vector<double> ParamList;
-class FrameHandler {
-    ImageHandler* imageHandler;
-    PositionTracker* positionTracker;
-    ParticleDistinguisher* particleDistinguisher;
+namespace mbtsky {
+    using namespace mbtsky;
 
-    cv::Mat currentFrame, nextFrame;
+    class FrameHandler {
+        FilterApplier* filterApplier;
+        PositionTracker *positionTracker;
+        ParticleDistinguisher *particleDistinguisher;
 
-    Coordinates  currentCenters, nextCenters;
-    std::vector<Coordinates> centerPositionChange;
+        cv::Mat currentFrame, nextFrame;
 
-    void __process();
-    void __filter();
-    void __distinguish();
-    void __track();
-    void __setup();
-    void __clearResults();
-public:
-    void setFrames(const cv::Mat&, const cv::Mat&);
-    void setCurrentFrame(const cv::Mat&);
-    void setNextFrame(const cv::Mat&);
-    cv::Mat getCurrentFrame();
-    cv::Mat getNextFrame();
-    std::vector<Coordinates> getPositionChange();
-    void ProcessFrames();
-    FrameHandler();
-    void reset();
-    //
-    void setImageHandler(ImageHandler*);
-    ImageHandler* getImageHandler();
-    void setParticleDistinguisher(ParticleDistinguisher*);
-    ParticleDistinguisher* getParticleDistinguisher();
-    void setPositionTracker(PositionTracker*);
-    PositionTracker* getPositionTracker();
+        Coordinates currentCenters, nextCenters;
+        std::vector<Coordinates> centerPositionChange;
 
-};
+        void __process();
 
+        void __filter();
 
+        void __distinguish();
+
+        void __track();
+
+        void __setup();
+
+        void __clearResults();
+
+    public:
+        void setFrames(const cv::Mat &, const cv::Mat &);
+
+        void setCurrentFrame(const cv::Mat &);
+
+        void setNextFrame(const cv::Mat &);
+
+        cv::Mat getCurrentFrame() {
+            return currentFrame;
+        };
+
+        cv::Mat getNextFrame() {
+            return nextFrame;
+        };
+
+        std::vector<Coordinates> getPositionChange() {
+            return centerPositionChange;
+        };
+
+        void ProcessFrames();
+
+        FrameHandler();
+
+        void reset();
+
+        //
+        FilterApplier* getFilterApplier() {
+            return filterApplier;
+        }
+
+        void setParticleDistinguisher(ParticleDistinguisher * pd) {
+            particleDistinguisher = pd;
+        };
+
+        ParticleDistinguisher *getParticleDistinguisher() {
+            return particleDistinguisher;
+        };
+
+        void setPositionTracker(PositionTracker *pt) {
+            positionTracker = pt;
+        };
+
+        PositionTracker *getPositionTracker() {
+            return positionTracker;
+        };
+
+    };
+}
 #endif //PARTICLEDISTINGUISHER_FRAMEHANDLER_H

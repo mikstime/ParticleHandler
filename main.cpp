@@ -7,33 +7,35 @@
 #include <PositionHandler.h>
 #include "Loader.h"
 typedef std::vector<cv::Point> Points;
+using namespace mbtsky;
 template <typename T>
 LoadableObjectBase* createInstance() {return new T;}
 int main() {
     auto pa = new PositionAnalyser;
 
     std::map<std::string, LoadableObjectBase*(*)()> TypeList;
+    TypeList["VideoReader"] = &createInstance<VideoReader>;
+
     TypeList["GrayScaleFilter"] = &createInstance<GrayScaleFilter>;
     TypeList["EmphasizeFilter"] = &createInstance<EmphasizeFilter>;
-    TypeList["ParticleDistinguisher"] = &createInstance<ParticleDistinguisher>;
-    TypeList["VideoReader"] = &createInstance<VideoReader>;
+
     TypeList["PositionHandler"] = &createInstance<PositionHandler>;
     TypeList["PositionTracker"] = &createInstance<PositionTracker>;
+    TypeList["ParticleDistinguisher"] = &createInstance<ParticleDistinguisher>;
+
     Loader* loader = Loader::instance();
     loader->setObjectTypes(TypeList);
     auto ObjList = loader->parseObjects("../test.json");
+    delete loader;
     for(int i = 0; i < ObjList.size(); i++) {
         std::cout << ObjList[i].getObjectTypeName() << '\n';
     }
 
     auto fh = pa->getFrameHandler();
-    auto fa = fh->getImageHandler()->getFilterApplier();
-    auto ph = pa->getPositionHandler();
-    auto pt = fh->getPositionTracker();
+    auto fa = fh->getFilterApplier();
     std::vector<Filter*> FilterList;
     FilterList.push_back((Filter*)ObjList[0].getObject());
     FilterList.push_back((Filter*)ObjList[1].getObject());
-
 
     fa->addFilters(FilterList);
     fh->setParticleDistinguisher((ParticleDistinguisher*)ObjList[2].getObject());

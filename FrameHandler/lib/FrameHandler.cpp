@@ -8,6 +8,7 @@
 #include "GrayScaleFilter.h"
 #include "EmphasizeFilter.h"
 #include "TYPES.h"
+using namespace mbtsky;
 void FrameHandler::setFrames(const cv::Mat& currentFrame_, const cv::Mat& nextFrame_) {
     currentFrame = currentFrame_;
     nextFrame    = nextFrame_;
@@ -22,7 +23,7 @@ void FrameHandler::setNextFrame(const cv::Mat& nextFrame_) {
     __clearResults();
 }
 void FrameHandler::__setup() {
-    imageHandler = new ImageHandler;
+    filterApplier = new FilterApplier;
     particleDistinguisher = new ParticleDistinguisher;
     positionTracker = new PositionTracker;
 }
@@ -33,24 +34,17 @@ void FrameHandler::__process() {
 }
 void FrameHandler::__filter() {
     // Filter first frame
-    imageHandler->setImage(currentFrame);
-    imageHandler->applyFilters();
-    currentFrame = imageHandler->getImage();
+    filterApplier->applyFilters(currentFrame, currentFrame);
     // Filter second frame
-
-    imageHandler->setImage(nextFrame);
-    imageHandler->applyFilters();
-    nextFrame  = imageHandler->getImage();
+    filterApplier->applyFilters(nextFrame, nextFrame);
 }
 void FrameHandler::__distinguish() {
     cv::Mat frame1gray, frame2gray;
     cv::cvtColor(currentFrame, frame1gray, cv::COLOR_BGR2GRAY);
     cv::cvtColor(nextFrame, frame2gray, cv::COLOR_BGR2GRAY);
-    particleDistinguisher->setImage(frame1gray);
-    particleDistinguisher->process();
+    particleDistinguisher->process(frame1gray);
     currentCenters = particleDistinguisher->getCenters();
-    particleDistinguisher->setImage(frame2gray);
-    particleDistinguisher->process();
+    particleDistinguisher->process(frame2gray);
     nextCenters = particleDistinguisher->getCenters();
 
 }
@@ -59,20 +53,11 @@ void FrameHandler::__track() {
     positionTracker->analyse();
     centerPositionChange = positionTracker->getUnitedCenters();
 }
-cv::Mat FrameHandler::getCurrentFrame() {
-    return currentFrame;
-}
-cv::Mat FrameHandler::getNextFrame() {
-    return nextFrame;
-}
 void FrameHandler::ProcessFrames() {
     __process();
 }
 FrameHandler::FrameHandler() {
     __setup();
-}
-std::vector<Coordinates> FrameHandler::getPositionChange() {
-    return centerPositionChange;
 }
 void FrameHandler::__clearResults() {
     currentCenters.clear();
@@ -81,29 +66,7 @@ void FrameHandler::__clearResults() {
 }
 void FrameHandler::reset() {
     __clearResults();
-    imageHandler->reset();
+    filterApplier->reset();
     particleDistinguisher->reset();
     positionTracker->reset();
-}
-ImageHandler* FrameHandler::getImageHandler() {
-    return imageHandler;
-}
-ParticleDistinguisher* FrameHandler::getParticleDistinguisher() {
-    return particleDistinguisher;
-}
-PositionTracker* FrameHandler::getPositionTracker() {
-    return positionTracker;
-}
-void FrameHandler::setParticleDistinguisher
-(ParticleDistinguisher *particleDistinguisher_) {
-
-    particleDistinguisher = particleDistinguisher_;
-}
-void FrameHandler::setImageHandler(ImageHandler *imageHandler_) {
-
-    imageHandler = imageHandler_;
-}
-void FrameHandler::setPositionTracker(PositionTracker *positionTracker_) {
-
-    positionTracker = positionTracker_;
 }

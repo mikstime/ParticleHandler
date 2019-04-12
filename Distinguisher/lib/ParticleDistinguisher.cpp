@@ -8,24 +8,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "TYPES.h"
-
-/*
- * File structure:
- *      setters
- *      private methods
- *      getters
- *      constructors
- */
-
-// Setters
-void ParticleDistinguisher::setImage(const cv::Mat& image_) {
-    image = image_;
-    __clearResults();
-    __process();
-}
-void ParticleDistinguisher::setParticleRadius(uint8_t particleRadius_) {
-    particleRadius = particleRadius_;
-}
+using namespace mbtsky;
 // Private methods
 void ParticleDistinguisher::__process() {
     __detectPoints();
@@ -63,39 +46,18 @@ void ParticleDistinguisher::__computeCenters() {
         }
         centers = result;
 }
-// Getters
-cv::Mat ParticleDistinguisher::getImage() {
-    return image;
 
-}
-uint8_t ParticleDistinguisher::getRadius() {
-    return particleRadius;
-}
-std::vector<Points> ParticleDistinguisher::getContours() {
-    return contours;
-}
-Coordinates ParticleDistinguisher::getCenters() {
-    return centers;
-}
-
-void ParticleDistinguisher::__clearResults() {
-    contours.clear();
-    centers.clear();
-}
-void ParticleDistinguisher::reset() {
-    __clearResults();
-}
-void ParticleDistinguisher::process() {
+void ParticleDistinguisher::process(const cv::Mat& image_) {
+    image = image_;
     __clearResults();
     __process();
+    image.release();
 }
 void ParticleDistinguisher::setParams(const json& objDesc) {
     if(!isValidProto(objDesc)) {
         return;
     }
-
     particleRadius = objDesc["particleRadius"].get<uint8_t >();
-
 }
 bool ParticleDistinguisher::isValidProto(const json &objDesc) {
     //@particleRadius is positive number.

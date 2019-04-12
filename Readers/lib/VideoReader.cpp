@@ -6,6 +6,7 @@
 #include <iostream>
 void VideoReader::readFile() {
     videoCapture.open(getPath(), cv::CAP_ANY);
+    upperBorder = upperBorder > getVideoSize() ? getVideoSize() : upperBorder;
 }
 
 cv::Mat VideoReader::getFrame(uint16_t id) {
@@ -28,10 +29,10 @@ void VideoReader::reset() {
     resetPath();
 }
 void VideoReader::setBorders(uint16_t lowerBorder_, uint16_t upperBorder_) {
-    if(lowerBorder_ < upperBorder_) {
+    if(lowerBorder_ > upperBorder_) {
         setBorders(upperBorder_, lowerBorder_);
     }
-    lowerBorder = lowerBorder_;
+    lowerBorder = lowerBorder_ < 1 ? (uint16_t) 1 : lowerBorder_;
     upperBorder = upperBorder_;
 }
 void VideoReader::setLowerBorder(uint16_t lowerBorder_) {
@@ -56,8 +57,8 @@ void VideoReader::setParams(const json &objDesc) {
 
     if (!isValidProto(objDesc))
         return;
-    setBorders(objDesc["lowerBorder"].get<uint8_t>(),
-               objDesc["upperBorder"].get<uint8_t>());
+    setBorders(objDesc["lowerBorder"].get<uint16_t>(),
+               objDesc["upperBorder"].get<uint16_t>());
 
 }
 bool VideoReader::isValidProto(const json &objDesc) {

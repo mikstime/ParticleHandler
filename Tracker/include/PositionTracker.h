@@ -11,7 +11,6 @@
 #include "PositionLogger.h"
 #include <LoadableObjectBase.h>
 #include <json.hpp>
-//@TODO replace PostionTracker with PositionHandler
 class PositionTracker: public LoadableObjectBase {
     uint8_t particleRadius;
     Coordinates currentCenters, nextCenters;

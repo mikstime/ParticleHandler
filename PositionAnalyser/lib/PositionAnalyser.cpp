@@ -6,6 +6,7 @@
 #include <opencv2/highgui.hpp>
 #include "PositionAnalyser.h"
 #include "TYPES.h"
+using namespace mbtsky;
 void PositionAnalyser::__clearResults() {
     currentPositions.clear();
 
@@ -35,8 +36,8 @@ void PositionAnalyser::ProcessVideo() {
     //@TODO do it in parallel
     //@TODO results could be stored in map by thread ID
     //@TODO and combined after processing
-    start = videoReader->getLowerBorder();
-    end = videoReader->getUpperBorder();
+    uint16_t start = videoReader->getLowerBorder();
+    uint16_t end = videoReader->getUpperBorder();
     for(uint16_t i = start; i < end; i += 2) {
         __process2Frames(i, i + 1);
         positionHandler->setPositionsToProcess(currentPositions);

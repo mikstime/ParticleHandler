@@ -5,42 +5,142 @@
 #ifndef PARTICLEDISTINGUISHER_PARTICLEDISTINGUISHER_H
 #define PARTICLEDISTINGUISHER_PARTICLEDISTINGUISHER_H
 
-
-#include "opencv2/core/core.hpp"
-#include "TYPES.h"
+// Base object for loading json data
 #include <LoadableObjectBase.h>
+// Required openCV modules
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/core/core.hpp"
+//
+#include "TYPES.h"
 using nlohmann::json;
-class ParticleDistinguisher : public LoadableObjectBase {
-    cv::Mat image;
-    // Radius of a particle
-    uint8_t particleRadius;
-    // variable for storing particles
-    std::vector<Points> contours;
-    // variable for storing centers of the particles
-    Coordinates centers;
-    // List of private methods that are needed
-    // to process image
-    void __process();
-    void __detectPoints();
-    void __filterResults();
-    void __computeCenters();
-    void __clearResults();
-    bool isValidProto(const json&);
-public:
-    //setters
-    void setImage(const cv::Mat&);
-    void setParticleRadius(uint8_t);
-    //getters
-    uint8_t getRadius();
-    cv::Mat getImage();
-    std::vector<Points> getContours();
-    Coordinates getCenters();
-    //constructors
-    ParticleDistinguisher() = default;
-    void process();
-    void reset();
-    void setParams(const json&) override;
-};
+namespace mbtsky {
+    class ParticleDistinguisher : public LoadableObjectBase {
+        //*************************************************************************
+        // image - source image used for particle recognition
+        //*************************************************************************
+        cv::Mat image;
+        //*************************************************************************
+        // particleRadius is used for filtering results
+        //*************************************************************************
+        uint8_t particleRadius;
+        //*************************************************************************
+        // contours are used for storing filtered contours
+        //*************************************************************************
+        std::vector<Points> contours;
+        //*************************************************************************
+        // centers store center of each contour
+        //*************************************************************************
+        Coordinates centers;
 
+        //*************************************************************************
+        // __process
+        // combines __detectPoints,
+        // __detectPoints, __filterResults together
+        //*************************************************************************
+        void __process();
+
+        //*************************************************************************
+        // __detectPoints
+        // detects all contors in the image
+        //*************************************************************************
+        void __detectPoints();
+
+        //*************************************************************************
+        // __filterResults
+        // filer all the 'fake' contours.
+        //*************************************************************************
+        void __filterResults();
+
+        //*************************************************************************
+        // __computeCenters
+        // compute center of masses for each contour
+        //*************************************************************************
+        void __computeCenters();
+
+        //*************************************************************************
+        // __clearResults
+        // remove all stored data
+        //*************************************************************************
+        void __clearResults() {
+            contours.clear();
+            centers.clear();
+        };
+
+        bool isValidProto(const json &objDesc);
+
+    public:
+        //*************************************************************************
+        // setParticleRadius
+        // @param particleRadius - radius of the particle
+        //*************************************************************************
+        void setParticleRadius(uint8_t particleRadius_) {
+            particleRadius = particleRadius_;
+        };
+
+        //*************************************************************************
+        // getParticleRadius
+        // @return radius of the particle
+        //*************************************************************************
+        uint8_t getParticleRadius() {
+            return particleRadius;
+        };
+
+        //*************************************************************************
+        // getContours
+        // @return contour for each particle in the image
+        // Computed for the last image.
+        //*************************************************************************
+        std::vector<Points> getContours() {
+            return contours;
+        };
+
+        //*************************************************************************
+        // getCenters
+        // @return center of each particle.
+        // Computed for the last image.
+        //*************************************************************************
+        Coordinates getCenters() {
+            return centers;
+        };
+
+        //*************************************************************************
+        // default constructor.
+        // Sets particle's radius to 1
+        //*************************************************************************
+        ParticleDistinguisher() { particleRadius = 1; };
+
+        //*************************************************************************
+        // Copy constructor
+        //*************************************************************************
+        ParticleDistinguisher(ParticleDistinguisher &o) {
+            particleRadius = o.getParticleRadius();
+        };
+
+        //*************************************************************************
+        // process
+        // @param image - binary image in grayscale mode
+        // Find contours and centers for particles in image
+        // Particles are defined by theirs radius
+        //*************************************************************************
+        void process(const cv::Mat &image_);
+
+        //*************************************************************************
+        // reset
+        // removes all stored values
+        //*************************************************************************
+        void reset() {
+            __clearResults();
+        };
+
+        //*************************************************************************
+        // setParams
+        // @param Desctiptor in json format.
+        // required data : particleRadius
+        // sets particleRadius to mentioned in json
+        //*************************************************************************
+        void setParams(const json &objDesc) override;
+    };
+}
 
 #endif //PARTICLEDISTINGUISHER_PARTICLEDISTINGUISHER_H
