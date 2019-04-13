@@ -7,46 +7,108 @@
 #include <Filter.h>
 #include <LoadableObjectBase.h>
 using nlohmann::json;
-class Loader {
-    // private constructor for preventing creation of new copies
-    Loader() = default;
-    // Class for storing loaded objects and names
-    class Result {
-        std::string objTypeName;
-        LoadableObjectBase* obj;
+namespace mbtsky {
+    class Loader {
+        //*********************************************************************
+        // private constructor for preventing creation of new copies
+        //*********************************************************************
+        Loader() = default;
+
+        //*********************************************************************
+        // Class for storing loaded objects and names
+        //*********************************************************************
+        class Result {
+            //*****************************************************************
+            // type name inherited from LoadableObjectBase
+            //*****************************************************************
+            std::string objTypeName;
+
+            //*****************************************************************
+            // pointer to object
+            //*****************************************************************
+            LoadableObjectBase *obj;
+
+            //*****************************************************************
+            //  Never used
+            //*****************************************************************
+            Result() = default;
+
+        public:
+
+            //*****************************************************************
+            // @param name - objTypeName
+            // @param obj_ - LoadableObjectBase ancestor
+            //*****************************************************************
+            Result(const std::string &name, LoadableObjectBase *obj_) {
+                obj = obj_;
+                objTypeName = name;
+            }
+
+            //*****************************************************************
+            // getObjectTypeName
+            // @result object type name
+            //*****************************************************************
+            std::string getObjectTypeName() { return objTypeName; }
+
+            //*****************************************************************
+            //@result pointer to object
+            //*****************************************************************
+            LoadableObjectBase *getObject() { return obj; }
+
+        };
+
+        //*********************************************************************
+        // For storing constructors
+        //*********************************************************************
+        std::map<std::string, LoadableObjectBase *(*)()> objectTypes;
+
+        //*********************************************************************
+        // ResultList
+        //*********************************************************************
+        std::vector<Result> loadedObjects;
+
+        //*********************************************************************
+        // __updateExistingObject
+        // if objects exists update it by object's id
+        //*********************************************************************
+        bool __updateExistingObj(const json &objDesc);
+
+        //*********************************************************************
+        // __createNewObj
+        // create object by type name
+        //*********************************************************************
+        bool __createNewObj(const json &objDesc);
+
     public:
-        Result() = default;
-        Result(const std::string& name, LoadableObjectBase* obj_) {
-            obj = obj_;
-            objTypeName = name;
+
+        //*********************************************************************
+        // Singleton structure
+        //*********************************************************************
+        static Loader *instance() {
+            static Loader *INSTANCE = new Loader();
+            return INSTANCE;
+        };
+
+        //*********************************************************************
+        // setObjectTypeNames
+        // must be set before loading objects
+        //*********************************************************************
+        void setObjectTypes(const std::map<std::string,
+                LoadableObjectBase *(*)()> &objectTypes_) {
+            // Set object types that can be loaded
+            objectTypes = objectTypes_;
         }
-        std::string getObjectTypeName() {
-            return objTypeName;
-        }
-        LoadableObjectBase* getObject() {
-            return obj;
-        }
+
+        //*********************************************************************
+        // reset
+        // remove all stored data
+        //*********************************************************************
+        void reset();
+
+        //*********************************************************************
+        // parseObjects
+        // Load objects from json file by it's path
+        //*********************************************************************
+        std::vector<Result> parseObjects(std::string);
     };
-    // For storing constructors
-    std::map<std::string, LoadableObjectBase*(*)()> objectTypes;
-    // ResultList
-    std::vector<Result> loadedObjects;
-    bool __updateExistingObj(const json& objDesc);
-    bool __createNewObj(const json& objDesc);
-    // initialize Loader
-public:
-    // Singleton structure
-    static Loader* instance() {
-        static Loader* INSTANCE = new Loader();
-        return INSTANCE;
-    };
-    void setObjectTypes(const std::map<std::string,
-            LoadableObjectBase*(*)()> &objectTypes_) {
-        // Set object types that can be loaded
-        objectTypes = objectTypes_;
-    }
-    void reset();
-    // Load objects from json file by it's path
-    std::vector<Result> parseObjects(std::string);
-    // Default constructor
-};
+}
