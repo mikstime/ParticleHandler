@@ -11,27 +11,80 @@
 #include "TYPES.h"
 #include <LoadableObjectBase.h>
 #include <json.hpp>
-class PositionHandler: public LoadableObjectBase {
-    uint8_t particleRadius;
-    bool __isCombined = false;
-    std::vector<Coordinates> processedPositions, positionsToProcess;
-    std::map<int, bool> processedFound;
-    std::map<int, bool> toProcessFound;
-    void __combinePositions();
-    //Do some things after combining positionLists
-    void __combined();
-    void __reset();
-    bool isValidProto(const nlohmann::json&);
-public:
-    PositionHandler() = default;
-    void setParticleRadius(uint8_t);
-    void setPositionsToProcess(const std::vector<Coordinates>&);
-    void combine();
-    std::vector<Coordinates> getProcessedPositions();
-    void reset();
+namespace mbtsky {
+    class PositionHandler : public LoadableObjectBase {
+        //*********************************************************************
+        // particleRadius - radius of the particle
+        //*********************************************************************
+        uint8_t particleRadius;
 
-    void setParams(const nlohmann::json&);
-};
+        //*********************************************************************
+        // indicator if positions processed
+        //*********************************************************************
+        bool __isCombined = false;
+        std::vector<Coordinates> processedPositions, positionsToProcess;
+        std::map<int, bool> processedFound;
+        std::map<int, bool> toProcessFound;
+
+        void __combinePositions();
+
+        //Do some things after combining positionLists
+        void __combined();
+
+        void __reset();
+
+        bool isValidProto(const nlohmann::json &);
+
+    public:
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
+        PositionHandler() = default;
+
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        PositionHandler(PositionHandler&);
+
+        //*********************************************************************
+        // setParticleRadius
+        //*********************************************************************
+        void setParticleRadius(uint8_t particleRadius_) {
+            particleRadius = particleRadius_;
+        };
+
+        //*********************************************************************
+        // setPositionsToProcess
+        //*********************************************************************
+        void setPositionsToProcess(const std::vector<Coordinates> & ptp);
+
+        //*********************************************************************
+        // combine
+        // stick positions together
+        //*********************************************************************
+        void combine();
+
+        //*********************************************************************
+        // getProcessedPositions
+        // @result vector of resulting coordinates
+        //*********************************************************************
+        std::vector<Coordinates>& getProcessedPositions() {
+            return processedPositions;
+        };
+
+        //*********************************************************************
+        // reset
+        // reset all modules and remove stored data
+        //*********************************************************************
+        void reset();
+
+        //*********************************************************************
+        // setParams
+        // parse json data to object
+        //*********************************************************************
+        void setParams(const nlohmann::json &) override;
+    };
+}
 
 
 #endif //FRAMEHANDLER_POSITIONHANDLER_H

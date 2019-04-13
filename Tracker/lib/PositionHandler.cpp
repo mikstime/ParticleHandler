@@ -6,9 +6,8 @@
 #include "PositionHandler.h"
 #include "TYPES.h"
 #include <json.hpp>
-std::vector<Coordinates> PositionHandler::getProcessedPositions() {
-    return processedPositions;
-}
+using namespace mbtsky;
+
 void PositionHandler::setPositionsToProcess(const std::vector<Coordinates>& positionsToProcess_) {
     positionsToProcess = positionsToProcess_;
     __isCombined = false;
@@ -83,9 +82,6 @@ void PositionHandler::combine() {
         __combined();
     }
 }
-void PositionHandler::setParticleRadius(uint8_t particleRadius_) {
-    particleRadius = particleRadius_;
-}
 void PositionHandler::__reset() {
     processedFound.clear();
     toProcessFound.clear();
@@ -100,4 +96,12 @@ void PositionHandler::setParams(const nlohmann::json & objDesc) {
 }
 bool PositionHandler::isValidProto(const nlohmann::json & objDesc) {
     return objDesc["particleRadius"].type() == nlohmann::json::value_t::number_unsigned;
+}
+PositionHandler::PositionHandler(mbtsky::PositionHandler &ph) {
+    particleRadius = ph.particleRadius;
+    __isCombined=  ph.__isCombined;
+    processedPositions = ph.processedPositions;
+    positionsToProcess = ph.positionsToProcess;
+    processedFound = ph.processedFound;
+    toProcessFound = ph.toProcessFound;
 }
