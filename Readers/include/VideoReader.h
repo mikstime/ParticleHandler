@@ -23,11 +23,11 @@ public:
 
     uint16_t getLowerBorder();
     uint16_t getUpperBorder();
-    void readFile();
+    void readFile() override;
     cv::Mat getFrame(uint16_t);
     uint16_t getVideoSize();
     void reset();
-    void setParams(const json&);
+    void setParams(const json&) override;
 };
 
 

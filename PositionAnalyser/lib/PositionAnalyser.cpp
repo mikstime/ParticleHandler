@@ -2,18 +2,13 @@
 // Created by Михаил on 2019-03-18.
 //
 
-#include <iostream>
-#include <opencv2/highgui.hpp>
 #include "PositionAnalyser.h"
-#include "TYPES.h"
 using namespace mbtsky;
 void PositionAnalyser::__clearResults() {
-    currentPositions.clear();
-
     videoReader->reset();
     frameHandler->reset();
-    positionLogger->reset();
     positionHandler->reset();
+    currentPositions.clear();
 }
 void PositionAnalyser::__setup() {
     videoReader = new VideoReader;
@@ -52,28 +47,17 @@ void PositionAnalyser::savePositionList(std::string path) {
 }
 void PositionAnalyser::reset() {
     __clearResults();
+    videoReader->reset();
+    frameHandler->reset();
+    positionHandler->reset();
+    positionLogger->resetPath();
 }
-FrameHandler* PositionAnalyser::getFrameHandler() {
-    return frameHandler;
-}
-PositionHandler* PositionAnalyser::getPositionHandler() {
-    return positionHandler;
-}
-PositionLogger* PositionAnalyser::getPositionLogger() {
-    return positionLogger;
-}
-VideoReader* PositionAnalyser::getVideoReader() {
-    return videoReader;
-}
-void PositionAnalyser::setVideoReader(VideoReader* videoReader_) {
-    videoReader = videoReader_;
-}
-void PositionAnalyser::setPositionHandler(PositionHandler *positionHandler_) {
-    positionHandler = positionHandler_;
-}
-void PositionAnalyser::setFrameHandler(FrameHandler *frameHandler_) {
-    frameHandler = frameHandler_;
-}
-void PositionAnalyser::setPositionLogger(PositionLogger *positionLogger_) {
-    positionLogger = positionLogger_;
+PositionAnalyser::PositionAnalyser(mbtsky::PositionAnalyser &pa) {
+    // copy constructor
+    videoReader = new VideoReader(*pa.videoReader);
+    frameHandler = new FrameHandler(*pa.frameHandler);
+    positionHandler = new PositionHandler(*pa.positionHandler);
+    positionLogger = new PositionLogger(*pa.positionLogger);
+    currentPositions.assign(pa.currentPositions.begin(),
+            pa.currentPositions.end());
 }

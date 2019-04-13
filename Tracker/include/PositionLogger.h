@@ -5,17 +5,24 @@
 #ifndef PARTICLEDISTINGUISHER_POSITIONLOGGER_H
 #define PARTICLEDISTINGUISHER_POSITIONLOGGER_H
 
-#include <opencv2/core/core.hpp>
 #include "Path.h"
 #include <vector>
+#include <fstream>
+#include <iostream>
 #include "TYPES.h"
+#include "PositionLogger.h"
+namespace mbtsky {
+    class PositionLogger : public Path {
 
-class PositionLogger: public Path {
+    public:
+        //*********************************************************************
+        // saveCoordinates
+        // @param coordinatesList - list of coordinates to be stored
+        //*********************************************************************
+        void saveCoordinates(std::vector<Coordinates> coordinatesList);
 
-public:
-    void saveCoordinates(std::vector<Coordinates>);
-    void reset();
-};
+    };
 
+}
 
 #endif //PARTICLEDISTINGUISHER_POSITIONLOGGER_H

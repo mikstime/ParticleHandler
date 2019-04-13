@@ -3,7 +3,6 @@
 //
 
 #include "VideoReader.h"
-#include <iostream>
 void VideoReader::readFile() {
     videoCapture.open(getPath(), cv::CAP_ANY);
     upperBorder = upperBorder > getVideoSize() ? getVideoSize() : upperBorder;

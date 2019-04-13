@@ -6,56 +6,155 @@
 #define FRAMEHANDLER_POSITIONANALYSER_H
 
 
-#include "FrameHandler.h"
 #include "VideoReader.h"
+#include "FrameHandler.h"
 #include "PositionLogger.h"
 #include "PositionHandler.h"
+#include <iostream>
+#include "TYPES.h"
 #include <string>
 #include <list>
-#include "TYPES.h"
 namespace mbtsky {
     using namespace mbtsky;
     class PositionAnalyser {
+        //*********************************************************************
+        // videoReader is used for reading concrete frames
+        //*********************************************************************
         VideoReader *videoReader;
+
+        //*********************************************************************
+        // frame handler is used for getting position change between two frames
+        //*********************************************************************
         FrameHandler *frameHandler;
-        PositionLogger *positionLogger;
+
+        //*********************************************************************
+        // PositionHandler is used for combining all positions together
+        //*********************************************************************
         PositionHandler *positionHandler;
+
+        //*********************************************************************
+        // PositionLogger is used for saving the result
+        //*********************************************************************
+        PositionLogger *positionLogger;
+
+        //*********************************************************************
+        // currentPosition is  used for storing positions that are not combined
+        //*********************************************************************
         std::vector<Coordinates> currentPositions;
 
+        //*********************************************************************
+        // __setup
+        //  setup modules
+        //*********************************************************************
         void __setup();
 
+        //*********************************************************************
+        // __clearResults
+        // remove all stored data
+        //*********************************************************************
         void __clearResults();
 
+        //*********************************************************************
+        // __process2Frames
+        // track particles in 2 frames
+        //*********************************************************************
         void __process2Frames(uint16_t, uint16_t);
 
     public:
+
+        //*********************************************************************
+        // loadVideo
         //Load video using VideoLoader
+        //*********************************************************************
         void loadVideo(std::string);
 
+        //*********************************************************************
+        // savePositionList
+        // Save positions by path
+        //*********************************************************************
         void savePositionList(std::string);
 
+        //*********************************************************************
+        // ProcessVideo
+        // Process chosen frames in video
+        //*********************************************************************
         void ProcessVideo();
 
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
         PositionAnalyser();
 
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        PositionAnalyser(PositionAnalyser&);
+
+        //*********************************************************************
+        // reset
+        // remove all stored data and reset all used modules
+        //*********************************************************************
         void reset();
 
-        //
-        VideoReader *getVideoReader();
+        //*********************************************************************
+        // getVideoReader
+        // @result pointer to videoReader
+        //*********************************************************************
+        VideoReader *getVideoReader() {
+            return videoReader;
+        };
 
-        void setVideoReader(VideoReader *);
+        //*********************************************************************
+        // setVideoReader
+        //*********************************************************************
+        void setVideoReader(VideoReader *videoReader_) {
+            videoReader = videoReader_;
+        };
 
-        FrameHandler *getFrameHandler();
+        //*********************************************************************
+        // getFrameHandler
+        // @result pointer to frameHandler
+        //*********************************************************************
+        FrameHandler *getFrameHandler() {
+            return frameHandler;
+        };
 
-        void setFrameHandler(FrameHandler *);
+        //*********************************************************************
+        // setFrameHandler
+        //*********************************************************************
+        void setFrameHandler(FrameHandler *frameHandler_) {
+            frameHandler  = frameHandler_;
+        };
 
-        PositionLogger *getPositionLogger();
+        //*********************************************************************
+        // getPositionLogger
+        // @result  pointer to positionLogger
+        //*********************************************************************
+        PositionLogger *getPositionLogger() {
+            return positionLogger;
+        };
 
-        void setPositionLogger(PositionLogger *);
+        //*********************************************************************
+        //  setPositionLogger
+        //*********************************************************************
+        void setPositionLogger(PositionLogger *positionLogger_) {
+            positionLogger = positionLogger_;
+        };
 
-        PositionHandler *getPositionHandler();
+        //*********************************************************************
+        // getPositionHandler
+        // @result pointer to positionHandler
+        //*********************************************************************
+        PositionHandler *getPositionHandler() {
+            return positionHandler;
+        };
 
-        void setPositionHandler(PositionHandler *);
+        //*********************************************************************
+        // setPositionHandler
+        //*********************************************************************
+        void setPositionHandler(PositionHandler * positionHandler_) {
+            positionHandler = positionHandler_;
+        };
     };
 }
 
