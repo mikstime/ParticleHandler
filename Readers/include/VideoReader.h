@@ -34,6 +34,20 @@ namespace mbtsky {
         bool isValidProto(const json &);
 
     public:
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
+        VideoReader() { lowerBorder = upperBorder = 1; }
+
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        VideoReader(VideoReader& vr) {
+                lowerBorder = vr.lowerBorder;
+                upperBorder = vr.upperBorder;
+                videoCapture = vr.videoCapture;
+                vr.currentFrame.copyTo(currentFrame);
+        }
 
         //*********************************************************************
         // setBorders

@@ -9,7 +9,7 @@
 
 using json = nlohmann::json;
 using namespace mbtsky;
-std::vector<Loader::Result> Loader::parseObjects(std::string JSONpath) {
+std::vector<Loader::Result>& Loader::parseObjects(std::string JSONpath) {
     // Read json data from file
     std::fstream file(JSONpath, std::ios::in | std::ios::binary);
     if(file.is_open()) {

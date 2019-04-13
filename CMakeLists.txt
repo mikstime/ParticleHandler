@@ -14,11 +14,13 @@ include_directories(Readers/include)
 include_directories(Readers/Path/include)
 include_directories(FrameHandler/include)
 include_directories(PositionAnalyser/include)
+include_directories(ObjectManager/include)
 include_directories(Loader/include)
 ###
 add_subdirectory(Filtering)
 add_subdirectory(Filtering/Filters)
 add_subdirectory(ParticleRecognizer)
+add_subdirectory(ObjectManager)
 add_subdirectory(Tracker)
 add_subdirectory(Readers)
 add_subdirectory(Readers/Path)
@@ -37,4 +39,5 @@ target_link_libraries(ParticleHandler ${OpenCV_LIBS}
         frameHandler
         positionAnalyser
         loaders
-        Recognizer)
+        Recognizer
+        objectManager)

@@ -17,7 +17,7 @@ namespace mbtsky {
         //*********************************************************************
         // Class for storing loaded objects and names
         //*********************************************************************
-        class Result {
+    protected: class Result {
             //*****************************************************************
             // type name inherited from LoadableObjectBase
             //*****************************************************************
@@ -57,6 +57,7 @@ namespace mbtsky {
 
         };
 
+    private:
         //*********************************************************************
         // For storing constructors
         //*********************************************************************
@@ -109,6 +110,8 @@ namespace mbtsky {
         // parseObjects
         // Load objects from json file by it's path
         //*********************************************************************
-        std::vector<Result> parseObjects(std::string);
+        std::vector<Result>& parseObjects(std::string);
+
+        friend class ObjectManager;
     };
 }
