@@ -3,6 +3,7 @@
 //
 
 #include "VideoReader.h"
+using namespace mbtsky;
 void VideoReader::readFile() {
     videoCapture.open(getPath(), cv::CAP_ANY);
     upperBorder = upperBorder > getVideoSize() ? getVideoSize() : upperBorder;
@@ -10,7 +11,7 @@ void VideoReader::readFile() {
 
 cv::Mat VideoReader::getFrame(uint16_t id) {
     upperBorder = upperBorder <= videoCapture.get(cv::CAP_PROP_FRAME_COUNT) ?
-            upperBorder : videoCapture.get(cv::CAP_PROP_FRAME_COUNT);
+            upperBorder : (uint16_t)videoCapture.get(cv::CAP_PROP_FRAME_COUNT);
 
     if(id >= lowerBorder && id <= upperBorder) {
         videoCapture.set(cv::CAP_PROP_POS_FRAMES,id);
@@ -21,7 +22,7 @@ cv::Mat VideoReader::getFrame(uint16_t id) {
     }
 }
 uint16_t VideoReader::getVideoSize() {
-    return videoCapture.get(cv::CAP_PROP_FRAME_COUNT);
+    return  (uint16_t) videoCapture.get(cv::CAP_PROP_FRAME_COUNT);
 }
 void VideoReader::reset() {
     videoCapture.release();
