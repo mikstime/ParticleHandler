@@ -2,26 +2,10 @@
 // Created by Михаил on 2019-03-16.
 //
 
-#include <iostream>
-#include <opencv2/imgproc.hpp>
 #include "FrameHandler.h"
-#include "GreyScaleFilter.h"
-#include "EmphasizeFilter.h"
-#include "TYPES.h"
+
 using namespace mbtsky;
-void FrameHandler::setFrames(const cv::Mat& currentFrame_, const cv::Mat& nextFrame_) {
-    currentFrame = currentFrame_;
-    nextFrame    = nextFrame_;
-    __clearResults();
-}
-void FrameHandler::setCurrentFrame(const cv::Mat& currentFrame_) {
-    currentFrame = currentFrame_;
-    __clearResults();
-}
-void FrameHandler::setNextFrame(const cv::Mat& nextFrame_) {
-    nextFrame = nextFrame_;
-    __clearResults();
-}
+
 void FrameHandler::__setup() {
     filterApplier = new FilterApplier;
     particleRecognizer = new ParticleRecognizer;
@@ -51,8 +35,17 @@ void FrameHandler::__distinguish() {
 void FrameHandler::__track() {
     positionTracker->analyse(currentCenters, nextCenters, centerPositionChange);
 }
-void FrameHandler::ProcessFrames() {
+void FrameHandler::ProcessFrames(
+        const cv::Mat &firstFrame,
+        const cv::Mat &secondFrame,
+        std::vector<Coordinates> &result
+) {
+    firstFrame.copyTo(currentFrame);
+    secondFrame.copyTo(nextFrame);
     __process();
+    result.clear();
+    result.assign(centerPositionChange.begin(), centerPositionChange.end());
+    __clearResults();
 }
 FrameHandler::FrameHandler() {
     __setup();
@@ -67,4 +60,18 @@ void FrameHandler::reset() {
     filterApplier->reset();
     particleRecognizer->reset();
     positionTracker->reset();
+}
+FrameHandler::FrameHandler(FrameHandler& fh) {
+    // Copy constructor
+    filterApplier = new FilterApplier(*fh.filterApplier);
+    particleRecognizer = new ParticleRecognizer(*fh.particleRecognizer);
+    positionTracker = new PositionTracker(*fh.positionTracker);
+    currentCenters.assign(fh.currentCenters.begin(),
+                          fh.currentCenters.end());
+    nextCenters.assign(fh.nextCenters.begin(),
+                       fh.nextCenters.end());
+    currentFrame = fh.currentFrame;
+    nextFrame = fh.nextFrame;
+    centerPositionChange.assign(fh.centerPositionChange.begin(),
+                                fh.centerPositionChange.end());
 }

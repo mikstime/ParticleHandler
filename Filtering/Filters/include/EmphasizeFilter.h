@@ -13,7 +13,7 @@
 using namespace mbtsky::filters;
 
 namespace mbtsky::filters {
-
+    using namespace mbtsky::filters;
     class EmphasizeFilter : public Filter {
 
         //*********************************************************************

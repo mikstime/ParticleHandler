@@ -7,10 +7,10 @@
 
 
 #include "ParticleRecognizer.h"
+#include "PositionHandler.h"
 #include "PositionTracker.h"
+#include "FilterApplier.h"
 #include "TYPES.h"
-#include <FilterApplier.h>
-#include <PositionHandler.h>
 typedef std::vector<double> ParamList;
 namespace mbtsky {
     using namespace mbtsky;
@@ -33,75 +33,114 @@ namespace mbtsky {
         PositionTracker *positionTracker;
 
         //*********************************************************************
-        // store two frames for processing
+        // Store two frames for processing
         //*********************************************************************
         cv::Mat currentFrame, nextFrame;
 
         //*********************************************************************
-        // coordinates of centers for both frames
+        // Coordinates of centers for both frames
         //*********************************************************************
         Coordinates currentCenters, nextCenters;
 
         //*********************************************************************
-        // corresponding positions for the particles from the second frame to
+        // Corresponding positions for the particles from the second frame to
         // the positions in the first one
         //*********************************************************************
         std::vector<Coordinates> centerPositionChange;
-
+        //*********************************************************************
+        // __process
+        // Combination of __filter, __distinguish and __track
+        //*********************************************************************
         void __process();
 
+        //*********************************************************************
+        // __filter
+        // Use filters and filterApplier for processing image
+        //*********************************************************************
         void __filter();
 
+        //*********************************************************************
+        // __distinguish
+        // Use particleRecognizer for detecting particles
+        //*********************************************************************
         void __distinguish();
 
+        //*********************************************************************
+        // __track
+        // Use positionTracker for tracking motion of particles
+        //*********************************************************************
         void __track();
 
+        //*********************************************************************
+        // __setup
+        // setup modules
+        //*********************************************************************
         void __setup();
 
+        //*********************************************************************
+        // __clearResults
+        // remove all stored data
+        //*********************************************************************
         void __clearResults();
 
     public:
 
-        void ProcessFrames();
+        //*********************************************************************
+        // ProcessFrames
+        // @param first and second frames
+        // @param result - variable for assigning the result of processing
+        //*********************************************************************
+        void ProcessFrames(
+                const cv::Mat& firstFrame,
+                const cv::Mat& secondFrame,
+                std::vector<Coordinates>& result
+         );
 
+        //*********************************************************************
+        // Default constructor
+        //*********************************************************************
         FrameHandler();
 
+        //*********************************************************************
+        // Copy constructor
+        //*********************************************************************
+        FrameHandler(FrameHandler& fh);
+
+        //*********************************************************************
+        // reset
+        // Clear the results and reset all used modules
+        //*********************************************************************
         void reset();
-
-        void setFrames(const cv::Mat &, const cv::Mat &);
-
-        void setCurrentFrame(const cv::Mat &);
-
-        void setNextFrame(const cv::Mat &);
-
-        cv::Mat getCurrentFrame() {
-            return currentFrame;
-        };
-
-        cv::Mat getNextFrame() {
-            return nextFrame;
-        };
-
-        std::vector<Coordinates> getPositionChange() {
-            return centerPositionChange;
-        };
-        //
         FilterApplier* getFilterApplier() {
             return filterApplier;
         }
 
+        //*********************************************************************
+        // setParticleRecognizer
+        //*********************************************************************
         void setParticleRecognizer(ParticleRecognizer * pd) {
             particleRecognizer = pd;
         };
 
+        //*********************************************************************
+        // getParticleRecognizer
+        // @result pointer to particleRecognizer
+        //*********************************************************************
         ParticleRecognizer *getParticleRecognizer() {
             return particleRecognizer;
         };
 
+        //*********************************************************************
+        // setPositionTracker
+        //*********************************************************************
         void setPositionTracker(PositionTracker *pt) {
             positionTracker = pt;
         };
 
+        //*********************************************************************
+        // getPositionTracker
+        // @result pointer to positionTracker
+        //*********************************************************************
         PositionTracker *getPositionTracker() {
             return positionTracker;
         };

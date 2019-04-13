@@ -28,9 +28,7 @@ void PositionAnalyser::loadVideo(std::string path) {
 void PositionAnalyser::__process2Frames(uint16_t frame1Id, uint16_t frame2Id) {
     cv::Mat frame1 = videoReader->getFrame(frame1Id);
     cv::Mat frame2 = videoReader->getFrame(frame2Id);
-    frameHandler->setFrames(frame1, frame2);
-    frameHandler->ProcessFrames();
-    currentPositions = frameHandler->getPositionChange();
+    frameHandler->ProcessFrames(frame1, frame2, currentPositions);
 }
 void PositionAnalyser::ProcessVideo() {
     //@TODO do it in parallel

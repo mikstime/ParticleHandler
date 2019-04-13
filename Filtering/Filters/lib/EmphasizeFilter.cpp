@@ -5,6 +5,8 @@
 #include "EmphasizeFilter.h"
 
 using nlohmann::json;
+using namespace mbtsky::filters;
+
 void EmphasizeFilter::applyAtomic(Pixel &, const int *) {
     //Do nothing
 }

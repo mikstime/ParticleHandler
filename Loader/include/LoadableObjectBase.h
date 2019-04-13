@@ -8,6 +8,10 @@
 #include <json.hpp>
 class LoadableObjectBase {
 public:
+    //*********************************************************************
+    // setParams
+    // used for parsing params from json descriptor to object
+    //*********************************************************************
     virtual void setParams(const nlohmann::json&) = 0;
 };
 

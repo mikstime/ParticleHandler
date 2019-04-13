@@ -43,7 +43,7 @@ namespace mbtsky {
 
         //*************************************************************************
         // __detectPoints
-        // detects all contors in the image
+        // detects all contours in the image
         //*************************************************************************
         void __detectPoints();
 
@@ -123,7 +123,7 @@ namespace mbtsky {
 
         //*************************************************************************
         // process
-        // @param image - binary image in grayscale mode
+        // @param image - binary image in greyscale mode
         // Find contours and centers for particles in image
         // Particles are defined by theirs radius
         //*************************************************************************
@@ -139,7 +139,7 @@ namespace mbtsky {
 
         //*************************************************************************
         // setParams
-        // @param Desctiptor in json format.
+        // @param Descriptor in json format.
         // required data : particleRadius
         // sets particleRadius to mentioned in json
         //*************************************************************************

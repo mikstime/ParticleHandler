@@ -17,7 +17,7 @@ int main() {
 
     TypeList["VideoReader"] = &createInstance<VideoReader>;
     TypeList["GreyScaleFilter"] = &createInstance<filters::GreyScaleFilter>;
-    TypeList["EmphasizeFilter"] = &createInstance<EmphasizeFilter>;
+    TypeList["EmphasizeFilter"] = &createInstance<filters::EmphasizeFilter>;
     TypeList["PositionHandler"] = &createInstance<PositionHandler>;
     TypeList["PositionTracker"] = &createInstance<PositionTracker>;
     TypeList["ParticleRecognizer"] = &createInstance<ParticleRecognizer>;
